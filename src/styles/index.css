@@ -1,0 +1,24 @@
+/* 1. base */
+@import "./base/variables.css";
+@import "./base/reset.css";
+@import "./base/layout.css";
+
+/* 2. main components */
+@import "./components/button.css";
+@import "./components/modal.css";
+@import "./components/toast.css";
+
+/* 3. game parts */
+@import "./features/clicker.css";
+@import "./features/generators.css";
+@import "./features/skins.css";
+@import "./features/lootbox.css";
+@import "./features/shop.css";
+@import "./features/daily.css";
+@import "./features/achievements.css";
+@import "./features/instructions.css";
+@import "./features/skin-reward.css";
+@import "./features/menu.css";
+
+/* 4. always last */
+@import "./features/secret-cats.css";

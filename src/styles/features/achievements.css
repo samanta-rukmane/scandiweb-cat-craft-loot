@@ -1,0 +1,104 @@
+/* light dialog theme (.achievement-item is not used in JS anymore) */
+.achievements-dialog {
+  width: min(600px, calc(100% - 40px));
+  max-height: 80vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.achievements-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.achievements-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 20px 24px;
+  background: var(--paper);
+  border-bottom: 2px solid var(--accent);
+}
+
+.achievements-header h2 {
+  margin: 0;
+  color: var(--brown);
+  font-size: 24px;
+}
+
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 24px;
+  overflow-y: auto;
+}
+
+@media (max-width: 480px) {
+  .achievements-dialog {
+    width: calc(100% - 24px);
+  }
+
+  .achievements-header {
+    padding: 16px;
+  }
+
+  .achievements-header h2 {
+    font-size: 20px;
+  }
+
+  .achievements-list {
+    padding: 16px;
+  }
+}
+
+/* dark cards that JS actually uses (#achievementsList overrides the class above) */
+#achievementsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 350px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+
+.achievement-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 15px;
+  background: #2a2a2a;
+  border: 2px solid #444;
+  border-radius: 8px;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.achievement-card.unlocked {
+  opacity: 1;
+  border-color: var(--accent);
+  background: #382c1e;
+}
+
+.achievement-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.achievement-info {
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
+}
+
+.achievement-text {
+  font-size: 13px;
+  color: #ccc;
+}

@@ -1,0 +1,144 @@
+.skins-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgb(0 0 0 / 60%);
+}
+
+.skins-modal.open {
+  display: flex;
+}
+
+.skins-modal-content {
+  width: 100%;
+  max-width: 600px;
+  height: 80vh;
+  overflow-y: auto;
+  padding: 25px;
+  background: var(--paper);
+  border: 3px solid var(--accent);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
+}
+
+.skins-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.skins-modal-header h2 {
+  margin: 0;
+  color: var(--brown);
+}
+
+.owned-skins-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 15px;
+}
+
+.owned-skin-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 2px solid #3b260b;
+  border-radius: 8px;
+  background: #e6c9a5;
+  color: rgb(29, 27, 27);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.owned-skin-card:hover:not(:disabled) {
+  border-color: #422727;
+  transform: translateY(-2px);
+}
+
+.owned-skin-card.equipped {
+  border-color: #70d6a3;
+  background-color: #609e7f;
+}
+
+.owned-skin-card:disabled {
+  cursor: not-allowed;
+}
+
+.owned-skin-preview {
+  width: 64px;
+  height: 64px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 300% 400%;
+  image-rendering: pixelated;
+}
+
+.owned-skin-preview.skin-locked {
+  filter: brightness(0);
+}
+
+.owned-skin-card p {
+  margin: 0;
+}
+
+.owned-skin-rarity {
+  font-size: 12px;
+  color: #1f1a1a;
+}
+
+.skin-rarity-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.rarity-button {
+  border: 2px solid #ead5b8;
+  background: #fff;
+  color: var(--brown);
+  font-weight: bold;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.rarity-button:hover {
+  background: #f5e5ce;
+}
+
+.rarity-button.active {
+  background: var(--brown);
+  border-color: var(--brown);
+  color: white;
+}
+
+.no-owned-skins {
+  grid-column: 1 / -1;
+  margin: 10px 0;
+  color: var(--brown);
+  text-align: center;
+}
+
+@media (max-width: 750px) {
+  .skins-modal-content {
+    padding: 18px;
+  }
+  .owned-skins-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

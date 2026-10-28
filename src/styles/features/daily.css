@@ -1,0 +1,80 @@
+#dailyRewardDialog {
+  width: min(700px, calc(100% - 30px));
+  max-width: 700px;
+  max-height: 85vh;
+  padding: 25px;
+  overflow: auto;
+  border-radius: 16px;
+}
+
+#dailyRewardList {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 5px 3px 12px;
+}
+
+.daily-reward-card {
+  display: flex;
+  flex: 0 0 90px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 110px;
+  padding: 10px;
+  border: 2px solid #d4b58b;
+  border-radius: 10px;
+  background: white;
+  color: var(--brown);
+  text-align: center;
+}
+
+.daily-reward-card.claimed {
+  opacity: 0.5;
+}
+
+.daily-reward-card.today {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.daily-card-img {
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  image-rendering: pixelated;
+}
+
+.daily-reward-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+#claimDailyButton,
+#dailyRewardCloseBtn {
+  padding: 10px 18px;
+  font-weight: bold;
+}
+
+#claimDailyButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#offlineDialog {
+  width: min(450px, calc(100% - 30px));
+  max-width: 450px;
+  padding: 25px;
+}
+
+@media (max-width: 380px) {
+  #dailyRewardDialog {
+    padding: 15px;
+  }
+}

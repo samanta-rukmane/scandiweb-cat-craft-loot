@@ -1,0 +1,24 @@
+/* components/button.css */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn:hover {
+  background: var(--accent-dark);
+}
+
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  font-size: 26px;
+  line-height: 1;
+}

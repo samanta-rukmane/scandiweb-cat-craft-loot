@@ -1,0 +1,251 @@
+.skin-reward-dialog {
+  width: 300px;
+  max-width: calc(100% - 40px);
+  padding: 0;
+  border: 2px solid #ffd76a;
+  background: #292341;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+.skin-reward-dialog::backdrop {
+  backdrop-filter: blur(3px);
+}
+
+.skin-reward-dialog[open] {
+  animation: reward-appear 0.3s ease-out;
+}
+
+@keyframes reward-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.skin-reward-content {
+  position: relative;
+  padding: 28px 22px 22px;
+  overflow: hidden;
+}
+
+.close-skin-reward {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  z-index: 5;
+  background: transparent;
+  font-size: 24px;
+}
+
+.close-skin-reward:hover {
+  color: #ffd76a;
+}
+
+.reward-subtitle {
+  margin: 0 0 8px;
+  color: #d8d2e8;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.reward-title {
+  margin: 0 0 12px;
+  color: #ffd76a;
+  font-size: 23px;
+}
+
+.reward-sparkle {
+  margin: 0 auto 10px;
+  color: #ffd76a;
+  font-size: 25px;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.8) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(45deg);
+  }
+}
+
+.reward-skin-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 15px;
+}
+
+.reward-skin-preview .card-img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 300% 400%;
+  image-rendering: pixelated;
+  transform: scale(3);
+}
+
+.reward-label {
+  margin: 0 0 6px;
+  color: #d8d2e8;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+#rewardSkinName {
+  margin: 0 0 10px;
+  color: white;
+  font-size: 20px;
+}
+
+.reward-rarity {
+  display: inline-block;
+  margin: 0 0 20px;
+  padding: 5px 12px;
+  border: 1px solid #ffd76a;
+  border-radius: 12px;
+  color: #ffd76a;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.reward-rarity.rarity-common {
+  color: #d8d8d8;
+  border-color: #d8d8d8;
+}
+
+.reward-rarity.rarity-rare {
+  color: #64b5ff;
+  border-color: #64b5ff;
+}
+
+.reward-rarity.rarity-epic {
+  color: #d69aff;
+  border-color: #d69aff;
+}
+
+.reward-rarity.rarity-legendary {
+  color: #ffd76a;
+  border-color: #ffd76a;
+}
+
+.claim-skin-reward {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ffd76a;
+  background: transparent;
+  color: #ffd76a;
+  font-weight: bold;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.claim-skin-reward:hover {
+  background: #ffd76a;
+  color: #292341;
+  transform: translateY(-2px);
+}
+
+.claim-skin-reward:active {
+  transform: scale(0.98);
+}
+
+.reward-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.reward-confetti span {
+  position: absolute;
+  top: -25px;
+  font-size: 17px;
+  animation: confetti-fall 3s linear infinite;
+}
+
+.reward-confetti span:nth-child(1) {
+  left: 5%;
+}
+
+.reward-confetti span:nth-child(2) {
+  left: 18%;
+  animation-delay: 0.5s;
+}
+
+.reward-confetti span:nth-child(3) {
+  left: 32%;
+  animation-delay: 1s;
+}
+
+.reward-confetti span:nth-child(4) {
+  left: 45%;
+  animation-delay: 0.3s;
+}
+
+.reward-confetti span:nth-child(5) {
+  left: 60%;
+  animation-delay: 1.2s;
+}
+
+.reward-confetti span:nth-child(6) {
+  left: 73%;
+  animation-delay: 0.7s;
+}
+
+.reward-confetti span:nth-child(7) {
+  left: 85%;
+  animation-delay: 1.5s;
+}
+
+.reward-confetti span:nth-child(8) {
+  left: 95%;
+  animation-delay: 0.9s;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(0) rotate(0deg);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(350px) rotate(180deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skin-reward-dialog[open],
+  .reward-sparkle,
+  #rewardSkinImage,
+  .reward-confetti span {
+    animation: none;
+  }
+}

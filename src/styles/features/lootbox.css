@@ -1,0 +1,277 @@
+.lootbox-container {
+  position: relative;
+  width: 600px;
+  max-width: 100%;
+  height: 130px;
+  overflow: hidden;
+  margin: 20px auto;
+  background: #fff;
+  border: 3px solid var(--accent);
+  border-radius: 10px;
+}
+
+.lootbox-ribbon {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  height: 100%;
+  gap: 8px;
+}
+
+.lootbox-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: #e65c4f;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.reel-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 100px;
+  width: 100px;
+  height: 110px;
+  border: 2px solid var(--rarity-color, #888);
+  border-bottom: 5px solid var(--rarity-color, #888);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+.rarity-common {
+  --rarity-color: #9aa7b5;
+}
+
+.rarity-rare {
+  --rarity-color: #00bcd4;
+}
+
+.rarity-epic {
+  --rarity-color: #8a2be2;
+}
+
+.rarity-legendary {
+  --rarity-color: #ff8c00;
+}
+
+.lootbox-ribbon .card-img {
+  width: 64px;
+  height: 64px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 300% 400%;
+  image-rendering: pixelated;
+  transform: none;
+}
+
+.lootbox-modal {
+  width: min(600px, calc(100% - 30px));
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 25px;
+  background: var(--paper);
+  color: var(--brown);
+  border: 3px solid var(--accent);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
+}
+
+.lootbox-modal::backdrop {
+  background: rgb(0 0 0 / 60%);
+}
+
+.lootbox-modal-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.lootbox-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.lootbox-header-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  min-width: 0;
+}
+
+.lootbox-header-info h2 {
+  margin: 0;
+  text-align: left;
+}
+
+.energy-ad-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+.energy-display {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--brown);
+}
+
+.energy-bar {
+  display: block;
+  width: 183px;
+  height: 45px;
+  flex: 0 0 183px;
+  background-image: url("/skins/energy-bar.png");
+  background-repeat: no-repeat;
+  background-size: 576px 96px;
+  image-rendering: pixelated;
+}
+
+.energy-count {
+  display: inline-block;
+  flex: 0 0 auto;
+  min-width: 0;
+  white-space: nowrap;
+  margin-left: -5px;
+}
+
+#adDialog {
+  width: min(600px, calc(100% - 30px));
+  max-width: 600px;
+  max-height: 85vh;
+  padding: 25px;
+  overflow: auto;
+}
+
+#adVideo {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.watch-ad-btn {
+  flex-shrink: 0;
+  margin: 0 0 0 auto;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.watch-ad-btn:hover {
+  background: var(--accent-dark);
+}
+
+.open-lootbox-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.open-lootbox-btn:hover {
+  background: var(--accent-dark);
+}
+
+.dust-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 15px 0 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--brown);
+}
+
+.dust-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+#lootResult {
+  align-self: center;
+  min-height: 24px;
+  margin: 8px 0 0;
+  font-weight: bold;
+  text-align: center;
+  color: var(--brown);
+}
+
+@media (max-width: 750px) {
+  .reel-card {
+    width: 85px;
+    flex-basis: 85px;
+    height: 100px;
+  }
+  .lootbox-modal {
+    padding: 15px;
+  }
+
+  .lootbox-container {
+    height: 120px;
+  }
+
+  .energy-ad-row {
+    flex-wrap: wrap;
+  }
+  .watch-ad-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .lootbox-modal-header {
+    gap: 10px;
+  }
+  .energy-bar {
+    max-width: 100%;
+  }
+}
+@media (max-width: 380px) {
+  .energy-bar {
+    width: 140px;
+    flex-basis: 140px;
+  }
+
+  .watch-ad-btn {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  #dailyRewardDialog,
+  #adDialog {
+    padding: 15px;
+  }
+}

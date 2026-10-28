@@ -1,0 +1,108 @@
+.instructions-button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid #777;
+  border-radius: 50%;
+  background: #333;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.instructions-button:hover {
+  background: #555;
+  transform: scale(1.08);
+}
+
+.instructions-button:focus-visible {
+  outline: 3px solid #f0c674;
+  outline-offset: 3px;
+}
+
+@media (max-width: 750px) {
+  .instructions-button {
+    top: 12px;
+    left: 12px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+.instructions-dialog {
+  width: min(500px, calc(100% - 40px));
+  max-width: 500px;
+  max-height: 85vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.instructions-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  position: relative;
+}
+
+.instructions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  border-bottom: 1px solid #573101;
+}
+
+.instructions-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.instructions-body {
+  padding: 8px 22px 20px;
+  overflow-y: auto;
+}
+
+.instructions-body h3 {
+  margin: 20px 0 6px;
+  color: #bd8921;
+  font-size: 20px;
+}
+
+.instructions-body p {
+  margin: 8px 0;
+  color: #050505;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.start-playing-btn {
+  align-self: center;
+  min-width: 160px;
+  margin: 0 22px 22px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.start-playing-btn:hover {
+  transform: translateY(-2px);
+}
+
+.start-playing-btn:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}

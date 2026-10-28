@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat Clicker</title>
+  </head>
+
+  <body>
+    <img class="hidden-secret-cat" data-cat-id="secret_1" alt="Secret Cat" />
+    <img class="hidden-secret-cat" data-cat-id="secret_2" alt="Secret Cat" />
+    <img class="hidden-secret-cat" data-cat-id="secret_3" alt="Secret Cat" />
+    <img class="hidden-secret-cat" data-cat-id="secret_4" alt="Secret Cat" />
+    <nav class="top-button-bar" id="topMenu" aria-label="Game menu">
+      <button
+        type="button"
+        id="menuToggleBtn"
+        class="menu-toggle"
+        aria-expanded="false"
+        aria-controls="topMenu"
+        aria-label="Menu"
+      >
+        ☰
+      </button>
+      <button type="button" id="openSkinsBtn" class="btn skins-button">
+        MY SKINS
+      </button>
+
+      <button type="button" id="boxBtn" class="btn">OPEN BOX</button>
+
+      <button type="button" id="openShopBtn" class="btn">SHOP</button>
+      <button
+        type="button"
+        id="openAchievementsBtn"
+        class="btn open-achievements-btn"
+      >
+        OPEN ACHIEVEMENTS LIST
+      </button>
+
+      <button type="button" id="openDailyBtn" class="btn open-daily-btn">
+        OPEN DAILY LIST
+      </button>
+
+      <button
+        type="button"
+        id="openInstructionsBtn"
+        class="btn instructions-button"
+        aria-label="Game instructions"
+        title="Game instructions"
+      >
+        ?
+      </button>
+    </nav>
+
+    <section class="game">
+      <div class="main">
+        <div class="left">
+          <div class="generator-collections">
+            <div class="generator-display">
+              <div class="generator-display-title">Ball Collection</div>
+
+              <div class="generator-display-window" id="ballGeneratorWindow">
+                <div class="generator-balls" id="generatorBalls"></div>
+              </div>
+            </div>
+
+            <div class="generator-display">
+              <div class="generator-display-title">Bowl Collection</div>
+
+              <div class="bowl-generator-window" id="bowlGeneratorWindow">
+                <div class="generator-bowls" id="generatorBowls"></div>
+              </div>
+            </div>
+
+            <div class="generator-display">
+              <div class="generator-display-title">Bed Collection</div>
+
+              <div class="bed-generator-window" id="bedGeneratorWindow">
+                <div class="generator-beds" id="generatorBeds"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-area">
+            <h3>
+              Treats:
+              <span class="treats-count">0</span>
+            </h3>
+
+            <div class="cat-container">
+              <div class="sprite" id="clickBtn"></div>
+              <img
+                class="hidden-secret-cat"
+                data-cat-id="secret_5"
+                alt="Secret Cat"
+              />
+            </div>
+
+            <p>
+              Treats per click:
+              <span class="click-power">1</span>
+            </p>
+
+            <p>
+              Treats per second:
+              <span id="totalCps">0</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="upgrade" id="buyClickBtn" role="button" tabindex="0">
+            <div class="left-section">
+              <img
+                src="./skins/clicker-white.png"
+                alt="Clicker"
+                class="clicker-img"
+              />
+            </div>
+
+            <div class="mid-section">
+              <h4>
+                Clicker
+
+                <div class="cost-info">
+                  <p>
+                    Cost:
+                    <span class="clicker-cost">10</span>
+                  </p>
+
+                  <img src="./skins/food.png" alt="Treats" class="food-img" />
+                </div>
+              </h4>
+            </div>
+
+            <div class="right-section">
+              Level
+              <span class="click-level">0</span>
+            </div>
+
+            <div class="next-level-info">
+              <p>+<span class="click-power">1</span> food per click</p>
+            </div>
+          </div>
+
+          <div class="generator-section">
+            <h3>Cat generators</h3>
+
+            <div id="generatorList"></div>
+            <img
+              class="hidden-secret-cat"
+              data-cat-id="secret_6"
+              alt="Secret Cat"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="skinsModal" class="skins-modal" aria-hidden="true">
+      <div
+        class="skins-modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="skinsModalTitle"
+      >
+        <div class="skins-modal-header">
+          <h2 id="skinsModalTitle">My Skins</h2>
+
+          <button
+            type="button"
+            id="closeSkinsBtn"
+            class="btn close-btn"
+            aria-label="Close skins"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div class="skin-rarity-filters">
+          <button
+            type="button"
+            class="btn rarity-button active"
+            data-rarity="common"
+          >
+            Common
+          </button>
+
+          <button type="button" class="btn rarity-button" data-rarity="rare">
+            Rare
+          </button>
+
+          <button type="button" class="btn rarity-button" data-rarity="epic">
+            Epic
+          </button>
+
+          <button
+            type="button"
+            class="btn rarity-button"
+            data-rarity="legendary"
+          >
+            Legendary
+          </button>
+          <button type="button" class="btn rarity-button" data-rarity="secret">
+            Secret
+          </button>
+        </div>
+
+        <div id="ownedSkinsList" class="owned-skins-list"></div>
+      </div>
+    </div>
+
+    <dialog id="adDialog" class="modal">
+      <video id="adVideo" src="./ad.webm" muted playsinline></video>
+      <p>Watching ad...</p>
+    </dialog>
+
+    <dialog id="dialog" class="modal lootbox-modal">
+      <div class="lootbox-modal-content">
+        <img
+          class="hidden-secret-cat"
+          data-cat-id="secret_7"
+          alt="Secret Cat"
+        />
+        <div class="lootbox-modal-header">
+          <div class="lootbox-header-info">
+            <h2>Open a Loot Box</h2>
+
+            <div class="energy-ad-row">
+              <div class="energy-display">
+                <div
+                  class="energy-bar"
+                  role="progressbar"
+                  aria-label="Energy"
+                  aria-valuemin="0"
+                  aria-valuemax="10"
+                  aria-valuenow="10"
+                ></div>
+              </div>
+
+              <span class="energy-count">10 / 10</span>
+
+              <button type="button" class="btn watch-ad-btn" id="watchAddBtn">
+                Watch AD
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="closeBtn"
+            class="btn close-btn"
+            aria-label="Close loot box"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div class="lootbox-container">
+          <div class="lootbox-line"></div>
+          <div class="lootbox-ribbon"></div>
+        </div>
+
+        <button type="button" id="openBoxBtn" class="btn open-lootbox-btn">
+          OPEN BOX
+        </button>
+
+        <p class="dust-display">
+          Dust:
+          <span class="dust-count">0</span>
+
+          <img src="./skins/dust.png" alt="Dust" class="dust-icon" />
+        </p>
+
+        <p id="lootResult"></p>
+      </div>
+    </dialog>
+
+    <dialog id="shopDialog" class="modal shop-dialog">
+      <div class="shop-content">
+        <img
+          class="hidden-secret-cat"
+          data-cat-id="secret_8"
+          alt="Secret Cat"
+        />
+        <header class="shop-header">
+          <h2>Background Shop</h2>
+
+          <button
+            type="button"
+            id="closeShopBtn"
+            aria-label="Close shop"
+            class="btn close-btn"
+          >
+            &times;
+          </button>
+        </header>
+
+        <div class="shop-balance">
+          <span>Your dust:</span>
+
+          <strong id="shopDustCount">0</strong>
+
+          <img src="/skins/dust.png" alt="" class="dust-icon" />
+        </div>
+
+        <p class="shop-description">
+          Buy new backgrounds and give your cat a new place to relax!
+        </p>
+
+        <div id="backgroundList" class="background-list"></div>
+      </div>
+    </dialog>
+
+    <dialog id="dailyRewardDialog" class="modal">
+      <h2>Daily reward</h2>
+
+      <div id="dailyRewardList"></div>
+
+      <button type="button" id="claimDailyButton" class="btn">Claim</button>
+
+      <button type="button" id="dailyRewardCloseBtn" class="btn">Close</button>
+    </dialog>
+
+    <dialog id="offlineDialog" class="modal">
+      <h2>Welcome back!</h2>
+
+      <p>
+        While you were away, your cats earned
+        <span id="offline-amount">0</span> treats.
+      </p>
+
+      <button type="button" id="offlineCloseBtn" class="btn">Nice!</button>
+    </dialog>
+
+    <dialog id="achievementsDialog" class="modal achievements-dialog">
+      <div class="achievements-content">
+        <img
+          class="hidden-secret-cat"
+          data-cat-id="secret_9"
+          alt="Secret Cat"
+        />
+        <header class="achievements-header">
+          <h2>Achievements</h2>
+
+          <button
+            type="button"
+            id="achievementsCloseBtn"
+            class="btn close-btn"
+            aria-label="Close achievements"
+          >
+            &times;
+          </button>
+        </header>
+
+        <div id="achievementsList" class="achievements-list"></div>
+      </div>
+    </dialog>
+
+    <div id="toastContainer" class="toast-container" popover="manual"></div>
+
+    <dialog id="instructionsDialog" class="modal instructions-dialog">
+      <div class="instructions-content">
+        <img
+          class="hidden-secret-cat"
+          data-cat-id="secret_10"
+          alt="Secret Cat"
+        />
+        <div class="instructions-header">
+          <h2>How to Play</h2>
+
+          <button
+            type="button"
+            id="closeInstructionsBtn"
+            class="btn close-btn"
+            aria-label="Close instructions"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div class="instructions-body">
+          <p>
+            Welcome to Cat Clicker! Take care of your cat and collect treats.
+          </p>
+
+          <h3>Collect Treats</h3>
+          <p>
+            Click your cat to earn treats. Each click gives you treats according
+            to your current treats-per-click level.
+          </p>
+
+          <h3>Buy Upgrades</h3>
+          <p>Purchase clicker upgrades to earn more treats with every click.</p>
+
+          <h3>Cat Generators</h3>
+          <p>
+            Buy toys, bowls, and beds to generate treats automatically over
+            time. Each generator produces a different amount of treats per
+            second.
+          </p>
+
+          <h3>Open Loot Boxes</h3>
+          <p>
+            Use energy to open loot boxes and collect cat skins. Duplicate skins
+            can reward you with dust.
+          </p>
+
+          <h3>Collect Skins &amp; Backgrounds</h3>
+          <p>
+            View your collected skins in My Skins and visit the Shop to unlock
+            new backgrounds.
+          </p>
+
+          <h3>Daily Rewards</h3>
+          <p>Check the Daily List regularly to claim your rewards.</p>
+        </div>
+
+        <button
+          type="button"
+          id="startPlayingBtn"
+          class="btn start-playing-btn"
+        >
+          Let's Play!
+        </button>
+      </div>
+    </dialog>
+
+    <dialog id="skinRewardDialog" class="modal skin-reward-dialog">
+      <div class="skin-reward-content">
+        <div class="reward-confetti" aria-hidden="true">
+          <span>✨</span>
+          <span>⭐</span>
+          <span>🎉</span>
+          <span>✨</span>
+          <span>🌟</span>
+          <span>🎊</span>
+          <span>⭐</span>
+          <span>✨</span>
+        </div>
+
+        <button
+          type="button"
+          id="closeSkinRewardBtn"
+          class="btn close-skin-reward"
+          aria-label="Close reward"
+        >
+          &times;
+        </button>
+
+        <p class="reward-subtitle">YOU GOT SOMETHING SPECIAL!</p>
+
+        <h2 class="reward-title">CONGRATULATIONS!</h2>
+
+        <div class="reward-sparkle" aria-hidden="true">✦</div>
+
+        <div class="reward-skin-preview">
+          <div id="rewardSkinImage" class="card-img"></div>
+        </div>
+
+        <p class="reward-label">NEW SKIN UNLOCKED</p>
+
+        <h3 id="rewardSkinName">Cat Skin</h3>
+
+        <p id="rewardSkinRarity" class="reward-rarity">COMMON</p>
+
+        <button
+          type="button"
+          id="claimSkinRewardBtn"
+          class="btn claim-skin-reward"
+        >
+          AWESOME!
+        </button>
+      </div>
+    </dialog>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

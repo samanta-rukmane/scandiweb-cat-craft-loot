@@ -1,0 +1,145 @@
+.shop-dialog {
+  width: min(850px, calc(100% - 30px));
+  max-width: 850px;
+  max-height: 85vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.shop-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  padding: 20px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.shop-header h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.shop-balance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: 2px solid #d4b58b;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 16px;
+}
+
+.shop-balance strong {
+  font-size: 18px;
+}
+
+.shop-balance .dust-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.shop-description {
+  margin: 0 0 18px;
+  line-height: 1.5;
+}
+
+.background-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.background-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 10px;
+  border: 2px solid #d4b58b;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.background-preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  object-fit: cover;
+  background: #e8d9c4;
+}
+
+.background-name {
+  margin: 10px 0 5px;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.background-price {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.background-action {
+  width: 100%;
+  margin-top: auto;
+  padding: 9px 8px;
+  border: 2px solid var(--brown);
+  border-radius: 7px;
+  background: #f0c878;
+  color: #392819;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.background-action:hover:not(:disabled) {
+  background: #ffda91;
+}
+
+.background-action:disabled {
+  border-color: #c9bda9;
+  background: #e6dfd4;
+  color: #756b5e;
+  cursor: not-allowed;
+}
+
+@media (max-width: 750px) {
+  .background-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .shop-content {
+    padding: 14px;
+  }
+
+  .shop-header h2 {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 380px) {
+  .background-list {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-content {
+    padding: 12px;
+  }
+
+  .shop-header h2 {
+    font-size: 19px;
+  }
+}

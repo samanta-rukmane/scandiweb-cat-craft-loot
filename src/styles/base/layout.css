@@ -1,0 +1,238 @@
+.game {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 230px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.left {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 145px;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.game-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  flex-shrink: 0;
+  flex: 0 1 400px;
+}
+
+.game-area h3 {
+  margin: 0 0 35px;
+  font-size: 34px;
+  text-align: center;
+}
+
+.game-area > p {
+  margin-top: 25px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  flex: 0 1 380px;
+  align-items: center;
+  min-width: 0;
+  width: 380px;
+  max-width: 100%;
+  padding-right: 0;
+  transform: translateX(24px);
+}
+
+/* top menu bar */
+.top-button-bar {
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto 76px;
+  padding: 10px 22px 10px 70px;
+}
+
+.top-button-bar button:not(.instructions-button):not(.menu-toggle) {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 9px 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.top-button-bar #openInstructionsBtn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+@media (max-width: 1400px) {
+  .main {
+    gap: 30px;
+  }
+
+  .left {
+    gap: 25px;
+  }
+
+  .right {
+    transform: none;
+  }
+  .right {
+    flex-basis: 460px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .game {
+    max-width: 100%;
+  }
+
+  .main {
+    gap: 40px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .right {
+    width: 100%;
+    max-width: 600px;
+    flex: 0 1 auto;
+    transform: none;
+  }
+}
+@media (max-width: 1250px) {
+  .main {
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 34px;
+  }
+
+  .left {
+    flex: 1 1 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .right {
+    flex: 0 1 380px;
+    margin: 0 auto;
+    padding-right: 0;
+  }
+  .game-area {
+    flex: 0 1 400px;
+  }
+}
+@media (max-width: 750px) {
+  body {
+    padding: 14px 16px 30px;
+    place-items: start center;
+  }
+
+  .game {
+    width: 100%;
+  }
+
+  .main {
+    flex-direction: column;
+    gap: 38px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .left {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .left h3 {
+    margin-bottom: 25px;
+  }
+  .right {
+    width: 100%;
+    align-items: center;
+    max-width: 360px;
+    transform: none;
+    flex: 0 1 auto;
+    padding: 0;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 750px) {
+  .top-button-bar {
+    gap: 8px;
+    margin-bottom: 58px;
+    padding: 5px 0 5px 48px;
+    justify-content: center;
+  }
+
+  .top-button-bar button:not(.instructions-button):not(.menu-toggle) {
+    max-width: 100%;
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 12px;
+    white-space: normal;
+  }
+  .game-area {
+    width: 100%;
+    order: 1;
+    max-width: 420px;
+  }
+
+  .top-button-bar #openInstructionsBtn {
+    top: 12px;
+    left: 12px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 380px) {
+  body {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  .top-button-bar {
+    gap: 6px;
+    padding-left: 44px;
+  }
+}

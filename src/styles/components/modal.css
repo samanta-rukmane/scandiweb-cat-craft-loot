@@ -1,0 +1,10 @@
+.modal {
+  border: 3px solid var(--accent);
+  border-radius: 16px;
+  background: var(--paper);
+  color: var(--brown);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
+}
+.modal::backdrop {
+  background: rgb(0 0 0 / 60%);
+}

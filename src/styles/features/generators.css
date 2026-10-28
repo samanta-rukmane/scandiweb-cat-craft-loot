@@ -1,0 +1,491 @@
+.generator-section {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 15px;
+  width: 100%;
+  max-width: 340px;
+  min-width: 0;
+  align-items: center;
+}
+
+.generator-section h3 {
+  margin: 0;
+  font-size: 22px;
+  text-align: center;
+  width: 100%;
+}
+
+#generatorList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+  min-width: 0;
+}
+
+.generator-row {
+  display: block;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.generator-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 90px;
+  padding: 9px 12px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background-color: #292929;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    opacity 0.2s ease;
+  width: 100%;
+  height: 90px;
+}
+
+.generator-button:hover:not(:disabled) {
+  background-color: #3b3632;
+  border-color: var(--accent);
+}
+
+.generator-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.generator-button:disabled {
+  background-color: #252525;
+  color: #999;
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.generator-button .generator-img {
+  display: block;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.generator-button .generator-info {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.generator-button .generator-name {
+  display: block;
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.generator-button .cost-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+}
+
+.generator-button .cost-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #ccc;
+}
+
+.generator-button .generator-cost {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.generator-button .food-img {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.generator-button .generator-level {
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.generator-row > .next-level-info p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.generator-row:hover > .next-level-info,
+.generator-row:focus-within > .next-level-info {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+/* generator collections (left side) */
+.generator-collections {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  flex: 0 1 300px;
+  min-width: 0;
+  margin-left: 0;
+  transform: translateX(-28px);
+}
+
+.generator-display-window {
+  background-image: url("/skins/generBg/genBg1.png");
+}
+
+.generator-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+}
+
+.generator-display-title {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: left;
+  margin: 0;
+  width: 100%;
+}
+
+#generatorBalls {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 90px;
+  overflow: hidden;
+}
+
+.generator-ball {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes ballSpawn {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.bowl-generator-window {
+  background-image: url("/skins/generBg/genBg2.png");
+}
+
+.bowl-generator-window {
+  position: relative;
+  min-height: 120px;
+  overflow: hidden;
+  background-image: url("/skins/generBg/genBg2.png");
+  background-size: cover;
+  background-position: center;
+}
+
+#generatorBowls {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  min-height: 120px;
+  overflow: hidden;
+}
+
+.generator-bowl {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.bed-generator-window {
+  position: relative;
+  min-height: 120px;
+  overflow: hidden;
+  background-image: url("/skins/generBg/genBg3.png");
+  background-size: cover;
+  background-position: center;
+}
+
+#generatorBeds {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  min-height: 120px;
+  overflow: hidden;
+}
+
+.generator-bed {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.generator-display-window,
+.bowl-generator-window,
+.bed-generator-window {
+  width: 300px;
+  height: 130px;
+  min-height: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* must stay after the center rules above */
+.generator-balls,
+.generator-bowls,
+.generator-beds {
+  justify-content: flex-start;
+}
+
+.container-toy {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 96px;
+  height: 96px;
+
+  object-fit: contain;
+  image-rendering: pixelated;
+
+  pointer-events: none;
+  user-select: none;
+
+  z-index: 0;
+}
+
+.cat-container .sprite {
+  position: relative;
+  z-index: 1;
+}
+
+.container-bowl {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+
+  right: 20px;
+  bottom: 40px;
+
+  object-fit: contain;
+  image-rendering: pixelated;
+
+  pointer-events: none;
+  user-select: none;
+
+  z-index: 2;
+}
+
+.container-bed {
+  position: absolute;
+
+  width: 130px;
+  height: 110px;
+
+  left: 10px;
+  bottom: 40px;
+
+  object-fit: contain;
+  image-rendering: pixelated;
+
+  pointer-events: none;
+  user-select: none;
+
+  z-index: 1;
+}
+
+@media (max-width: 1400px) {
+  .generator-collections {
+    transform: none;
+  }
+  .generator-display-window,
+  .bowl-generator-window,
+  .bed-generator-window {
+    width: 340px;
+  }
+
+  .h3 {
+    padding-top: 10px;
+  }
+
+  .generator-collections {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .generator-collections {
+    align-items: flex-start;
+  }
+
+  .generator-collections {
+    transform: none;
+  }
+
+  .generator-section h3 {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .generator-display-window,
+  .bowl-generator-window,
+  .bed-generator-window {
+    width: min(380px, calc(100vw - 40px));
+  }
+}
+@media (max-width: 1250px) {
+  .generator-collections {
+    flex-basis: 280px;
+    margin-left: 12px;
+  }
+}
+
+@media (max-width: 750px) {
+  .generator-section {
+    width: 100%;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  #generatorList {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .generator-row {
+    flex-direction: column;
+    gap: 8px;
+    display: flex;
+    margin-bottom: 32px;
+  }
+
+  .generator-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 75px;
+    padding: 10px;
+    height: auto;
+  }
+  .upgrade > .next-level-info,
+  .generator-row > .next-level-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 36px;
+    padding: 8px 10px;
+    top: calc(100% + 5px);
+    right: 0;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .generator-collections {
+    width: 100%;
+    align-items: center;
+    order: 2;
+    max-width: 380px;
+    flex: 0 1 auto;
+    margin: 0;
+    transform: none;
+  }
+
+  .generator-display {
+    align-items: center;
+  }
+
+  .generator-display-title {
+    text-align: center;
+  }
+  .generator-display-window,
+  .bowl-generator-window,
+  .bed-generator-window {
+    width: min(300px, calc(100vw - 40px));
+  }
+
+  .generator-button {
+    width: 100%;
+    min-height: 78px;
+    height: 78px;
+  }
+}
+
+@media (max-width: 380px) {
+  .generator-button {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .generator-button .generator-img {
+    width: 35px;
+    height: 40px;
+  }
+
+  .generator-button .generator-level {
+    font-size: 11px;
+  }
+}

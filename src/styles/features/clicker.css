@@ -1,0 +1,247 @@
+/* NOTE: .cat-container was missing in the pasted style.css, restored from the earlier version */
+.cat-container {
+  display: grid;
+  place-items: center;
+  width: 500px;
+  height: 250px;
+  background-image: url("/skins/background/cozy_room.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
+  max-width: 100%;
+}
+
+.sprite {
+  position: relative;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  background-image: url("/skins/cats/common/catOrigin.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  image-rendering: pixelated;
+  transform: scale(5);
+  transition:
+    opacity 0.1s,
+    transform 0.1s;
+}
+
+.sprite:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.sprite:active {
+  opacity: 0.8;
+  transform: scale(5.5);
+}
+
+.upgrade {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 340px;
+  max-width: 100%;
+  height: 90px;
+  box-sizing: border-box;
+  padding: 9px 12px;
+  border: 3px solid #000;
+  border-radius: 10px;
+  background-color: #222;
+  transition:
+    background-color 0.15s,
+    transform 0.15s;
+}
+
+.upgrade:hover {
+  transform: scale(1.02);
+}
+
+.upgrade:active {
+  transform: scale(0.98);
+}
+
+.upgrade:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 3px;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.clicker-img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+
+.mid-section {
+  flex: 1;
+  min-width: 0;
+  margin-left: 10px;
+}
+
+.mid-section h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.cost-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.cost-info p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.food-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.right-section {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* tooltip shared by .upgrade and .generator-row */
+.upgrade > .next-level-info,
+.generator-row > .next-level-info {
+  position: absolute;
+  top: 50%;
+  right: -115px;
+  display: none;
+  width: 105px;
+  min-height: 0;
+  height: auto;
+  padding: 10px 5px;
+  transform: translateY(-50%);
+  border: 2px solid #000;
+  border-radius: 8px;
+  background-color: #222;
+  color: #f8f7f5;
+  font-size: 13px;
+  font-weight: normal;
+  text-align: center;
+  line-height: 1.5;
+  z-index: 5;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.upgrade > .next-level-info p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.upgrade:hover > .next-level-info,
+.upgrade:focus-within > .next-level-info {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+/* "+N" popup on click */
+.floating-treat {
+  position: absolute;
+  z-index: 10;
+  color: #fdfdfd;
+  font-size: 22px;
+  font-weight: bold;
+  text-shadow:
+    1px 1px 2px #000,
+    0 0 6px rgb(255 209 102 / 40%);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  animation: floatingTreat 1.2s ease-out forwards;
+}
+
+@keyframes floatingTreat {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(0.7);
+  }
+
+  20% {
+    transform: translate(-50%, -8px) scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -65px) scale(1);
+  }
+}
+
+@media (max-width: 1400px) {
+  .cat-container {
+    width: 420px;
+    height: 250px;
+  }
+}
+@media (max-width: 1000px) {
+  .cat-container {
+    width: min(480px, 100%);
+  }
+}
+
+@media (max-width: 750px) {
+  .cat-container {
+    max-width: 100%;
+    width: 100%;
+    height: 230px;
+  }
+  .upgrade > .next-level-info {
+    display: none;
+  }
+
+  .upgrade {
+    width: 100%;
+    min-width: 0;
+    min-height: 75px;
+    padding: 10px;
+    height: auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .upgrade {
+    padding: 8px;
+  }
+
+  .clicker-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mid-section {
+    margin-left: 8px;
+  }
+
+  .mid-section h4 {
+    font-size: 14px;
+  }
+
+  .right-section {
+    margin-left: 5px;
+    font-size: 12px;
+  }
+  .cat-container {
+    height: 200px;
+  }
+}
