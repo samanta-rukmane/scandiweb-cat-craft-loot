@@ -41,18 +41,38 @@ export function claimDaily() {
   }
   const reward = DAILY_REWARDS[(state.dailyStreak - 1) % DAILY_REWARDS.length];
 
+
+  // - DELETE -
+  // for (const [key, value] of Object.entries(reward)) {
+  //   state[key] += value;
+  // }
+  // - ADD -
   for (const [key, value] of Object.entries(reward)) {
-    state[key] += value;
+    if (Number.isFinite(state[key])) state[key] += value;
   }
+  state.stats.totalTreats += reward.treats ?? 0;
+  // - - - -
   state.lastDailyClaim = now;
   return { ok: true, reward, streak: state.dailyStreak };
 }
-const DEBUG_OFFSET = 1;
+//   - DELETE -
+// const DEBUG_OFFSET = 1;
+// function dateString(offsetDays = 0) {
+//   const d = new Date();
+//   d.setDate(d.getDate() + offsetDays + DEBUG_OFFSET);
+//   return d.toISOString().slice(0, 10);
+// }
+//   - ADD -
 function dateString(offsetDays = 0) {
   const d = new Date();
-  d.setDate(d.getDate() + offsetDays + DEBUG_OFFSET);
-  return d.toISOString().slice(0, 10);
+  d.setDate(d.getDate() + offsetDays);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
+// - - - - -
+
 
 export function checkDailyCount() {
   const today = dateString();

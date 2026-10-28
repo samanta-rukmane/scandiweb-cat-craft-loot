@@ -1,7 +1,26 @@
 import { state } from "../core/state.js";
 import { BACKGROUNDS } from "../config/backgrounds.js";
+// - ADD -
+import { SKINS } from "../config/skins.js";
+// - - - -
+
 
 const NUMBER_FIELDS = ["treats", "dust", "energy", "clickLevel"];
+// - ADD -
+const DEFAULT_STATS = { totalClicks: 0, boxesOpened: 0, totalTreats: 0 };
+const SAVE_VERSION = 1;
+const migrations = {};
+
+function migrate(data) {
+  let v = data.version ?? 1;
+  while (v < SAVE_VERSION && migrations[v]) {
+    data = migrations[v](data);
+    v = data.version;
+  }
+  return data;
+}
+// - - - -
+
 
 export function save() {
   if (
@@ -34,7 +53,11 @@ export function load() {
         typeof savedData === "object" &&
         !Array.isArray(savedData)
       ) {
-        Object.assign(state, savedData);
+        // - DELETE -
+        // Object.assign(state, savedData);
+        // - ADD -
+           Object.assign(state, migrate(savedData));
+        // - - - -
       }
     }
   } catch (error) {
@@ -84,4 +107,21 @@ export function load() {
   ) {
     state.equippedBackground = "cozy_room";
   }
+
+  
+  // - ADD -
+  state.stats = {
+    ...DEFAULT_STATS,
+    ...(state.stats && typeof state.stats === "object" ? state.stats : {}),
+  };
+
+  state.ownedSkins = (Array.isArray(state.ownedSkins) ? state.ownedSkins : [])
+    .filter((id) => typeof id === "string" && Object.hasOwn(SKINS, id));
+  if (!state.ownedSkins.includes("default")) state.ownedSkins.unshift("default");
+  if (!state.ownedSkins.includes(state.equippedSkin)) state.equippedSkin = "default";
+
+  if (!Array.isArray(state.achievements)) state.achievements = [];
+  if (!Array.isArray(state.foundSecretCats)) state.foundSecretCats = [];
+  if (typeof state.lastDailyClaim !== "string") state.lastDailyClaim = "";
+ // - - - -
 }
