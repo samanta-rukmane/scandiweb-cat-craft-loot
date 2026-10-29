@@ -95,6 +95,12 @@ export function initSkinsModal(onChange) {
 function renderSkins(container) {
   container.replaceChildren();
 
+  
+  // - ADD -
+  const dustCounter = document.getElementById("skinsDustCount");
+  if (dustCounter) dustCounter.textContent = Math.floor(state.dust);
+  // - - - -
+
   const entries = Object.entries(SKINS).filter(
     ([, skin]) => skin.rarity === selectedRarity,
   );
@@ -174,7 +180,17 @@ function renderSkins(container) {
       const craftBtn = document.createElement("button");
       craftBtn.type = "button";
       craftBtn.classList.add("craft-button");
-      craftBtn.textContent = `Craft · ${cost} dust`;
+      // - DELETE -
+      // craftBtn.textContent = `Craft · ${cost} dust`;
+      // - ADD -
+      craftBtn.append(`Craft · ${cost} `);
+
+      const dustIcon = document.createElement("img");
+      dustIcon.src = assetUrl("/skins/dust.png");
+      dustIcon.alt = "dust";
+      dustIcon.classList.add("dust-icon");
+      craftBtn.append(dustIcon);
+      // - - - -
       craftBtn.disabled = state.dust < cost;
 
       craftBtn.addEventListener("click", () => {
