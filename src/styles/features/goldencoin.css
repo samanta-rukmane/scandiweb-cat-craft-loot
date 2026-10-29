@@ -1,0 +1,71 @@
+.golden-event-coin {
+  position: fixed;
+
+  width: 100px;
+  height: 100px;
+
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  cursor: pointer;
+  z-index: 10000;
+
+  animation: goldenCoinAppear 0.35s ease-out;
+  image-rendering: pixelated;
+}
+
+.golden-event-coin:hover {
+  transform: scale(1.15);
+  filter: brightness(1.15);
+}
+
+.golden-event-coin:active {
+  transform: scale(0.9);
+}
+
+@keyframes goldenCoinAppear {
+  from {
+    opacity: 0;
+    scale: 0.3;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.cat-container {
+  overflow: hidden;
+}
+
+.golden-rain-coin {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+
+  background-repeat: no-repeat;
+  background-position: 0 0;
+
+  image-rendering: pixelated;
+  pointer-events: none;
+  will-change: transform;
+
+  animation: goldenCoinFall var(--coin-fall-duration, 2s) linear forwards;
+}
+
+@keyframes goldenCoinFall {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(var(--coin-drift, 30px), 350px, 0);
+  }
+}

@@ -1,6 +1,7 @@
 import { state } from "../core/state.js";
 import { addEnergy } from "../loot/energy.js";
 import { GENERATORS } from "../config/generators.js";
+import { assetUrl } from "../config/paths.js";
 
 const BUBBLE_DURATION = 25_000;
 
@@ -93,17 +94,37 @@ const GENERATOR_EVENTS = [
   },
 ];
 
+const NEGATIVE_EVENTS = [
+  {
+    id: "takeTreatsEvent",
+    image: "takeTreatsEvent.png",
+    chance: 0.2,
+    type: "takeTreats",
+  },
+  {
+    id: "takeDustEvent",
+    image: "takeDustEvent.png",
+    chance: 0.15,
+    type: "takeDust",
+  },
+  {
+    id: "generatorEvent",
+    image: "generatorEvent.png",
+    chance: 0.05,
+    type: "takeGenerator",
+  },
+  {
+    id: "skinEvent",
+    image: "skinEvent.png",
+    chance: 0.01,
+    type: "takeSkin",
+  },
+];
+
 let spawnTimer = null;
 let expirationTimer = null;
 let activeBubble = null;
 let onChangeCallback = () => {};
-
-function getBubbleContainer() {
-  return (
-    document.querySelector(".cat-container") ||
-    document.getElementById("clickBtn")?.parentElement
-  );
-}
 
 function getEventHistory() {
   if (!state.bubbleEvents) {
@@ -121,11 +142,25 @@ function getEventHistory() {
 
 function isEventAvailable(event) {
   const lastClaimed = getEventHistory()[event.id] ?? 0;
-
   return Date.now() - lastClaimed >= event.cooldown;
 }
 
 function chooseEvent() {
+  const roll = Math.random();
+  let threshold = 0;
+
+  for (const event of NEGATIVE_EVENTS) {
+    threshold += event.chance;
+
+    if (roll < threshold) {
+      return event;
+    }
+  }
+
+  return chooseExistingEvent();
+}
+
+function chooseExistingEvent() {
   const availableEvents = EVENTS.filter(isEventAvailable);
   const roll = Math.random();
 
@@ -203,8 +238,7 @@ function spawnBubble(event) {
   bubble.type = "button";
   bubble.className = "event-bubble";
   bubble.setAttribute("aria-label", "Collect event reward");
-
-  bubble.style.backgroundImage = `url("/skins/emotes/${event.image}")`;
+  bubble.style.backgroundImage = `url("${assetUrl(`/skins/emotes/${event.image}`)}")`;
 
   container.appendChild(bubble);
   activeBubble = bubble;
@@ -236,6 +270,80 @@ function collectReward(event) {
 
     state.generators[event.generator] =
       (state.generators[event.generator] ?? 0) + 1;
+  } else if (event.type) {
+    switch (event.type) {
+      case "takeTreats": {
+        const amount = Math.floor(Math.max(0, state.treats) * 0.01);
+        state.treats = Math.max(0, state.treats - amount);
+        break;
+      }
+
+      case "takeDust": {
+        const amount = Math.floor(Math.max(0, state.dust) * 0.01);
+        state.dust = Math.max(0, state.dust - amount);
+        break;
+      }
+
+      case "takeGenerator": {
+        const availableGenerators = Object.keys(GENERATORS).filter(
+          (id) => (state.generators[id] ?? 0) > 0,
+        );
+
+        if (availableGenerators.length === 0) {
+          console.info("No generator levels available to remove.");
+          break;
+        }
+
+        const index = Math.floor(Math.random() * availableGenerators.length);
+        const generatorId = availableGenerators[index];
+
+        state.generators[generatorId] -= 1;
+        break;
+      }
+
+      case "takeSkin": {
+        const ownedSkins = state.ownedSkins;
+
+        if (!Array.isArray(ownedSkins) || ownedSkins.length <= 1) {
+          console.info("Not enough owned skins to remove one.");
+          break;
+        }
+
+        const equippedSkin = state.equippedSkin ?? state.currentSkin;
+
+        let removableSkins = ownedSkins.filter((skin) => skin !== equippedSkin);
+
+        if (removableSkins.length === 0) {
+          removableSkins = [...ownedSkins];
+        }
+
+        const index = Math.floor(Math.random() * removableSkins.length);
+        const skinToRemove = removableSkins[index];
+        const ownedIndex = ownedSkins.indexOf(skinToRemove);
+
+        if (ownedIndex !== -1) {
+          ownedSkins.splice(ownedIndex, 1);
+        }
+
+        if (skinToRemove === equippedSkin && ownedSkins.length > 0) {
+          if ("equippedSkin" in state) {
+            state.equippedSkin = ownedSkins[0];
+          }
+
+          if ("currentSkin" in state) {
+            state.currentSkin = ownedSkins[0];
+          }
+        }
+
+        break;
+      }
+
+      default:
+        console.error(`Unknown negative event type: ${event.type}`);
+        return;
+    }
+
+    getEventHistory()[event.id] = now;
   } else {
     const reward = event.getReward();
 
@@ -269,7 +377,6 @@ function collectReward(event) {
 }
 
 /**
- *
  * @param {Function} onChange Called after a reward is collected.
  */
 export function initBubbleEvents(onChange = () => {}) {

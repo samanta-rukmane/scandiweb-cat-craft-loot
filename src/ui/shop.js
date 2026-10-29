@@ -2,6 +2,8 @@ import { state } from "../core/state.js";
 import { save } from "../storage/save.js";
 import { BACKGROUNDS } from "../config/backgrounds.js";
 import { assetUrl } from "../config/paths.js";
+import { triggerUfoEvent } from "../events/ufoEvent.js";
+
 export function initShop(onChange) {
   const shopDialog = document.getElementById("shopDialog");
   const openShopBtn = document.getElementById("openShopBtn");
@@ -122,6 +124,9 @@ export function initShop(onChange) {
         state.equippedBackground = id;
 
         applyBackground();
+
+        triggerUfoEvent();
+
         save();
 
         renderShop();

@@ -19,6 +19,8 @@
 @import "./features/instructions.css";
 @import "./features/skin-reward.css";
 @import "./features/menu.css";
+@import "./features/goldencoin.css";
+@import "./features/ufoEvent.css";
 
 /* 4. always last */
 @import "./features/secret-cats.css";
