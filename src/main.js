@@ -56,7 +56,11 @@ initGenerators(() => {
   renderBedGenerator();
 });
 initShop(render);
-initSkinsModal();
+// - DELETE -
+// initSkinsModal();
+// - ADD -
+initSkinsModal(render);
+// - - - -
 initAchievementsList();
 initAchievementsModal();
 initCatAnimation();

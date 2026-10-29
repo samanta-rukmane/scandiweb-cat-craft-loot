@@ -1,6 +1,11 @@
 import { state } from "./state.js";
 import { CLICK_UPGRADE } from "../config/upgrades.js";
 import { GENERATORS } from "../config/generators.js";
+// - ADD -
+import { SKINS } from "../config/skins.js";
+import { CRAFT_COST } from "../config/balance.js";
+// - - - -
+
 
 export function clickCat() {
   state.treats += getClickPower();
@@ -68,3 +73,20 @@ export function getCps() {
 
   return totalCps;
 }
+
+
+// - ADD -
+export function craftSkin(id) {
+  const skin = SKINS[id];
+  const cost = CRAFT_COST[skin?.rarity];
+
+  if (!skin || cost === undefined) return false;
+  if (state.ownedSkins.includes(id)) return false;
+  if (state.dust < cost) return false;
+
+  state.dust -= cost;
+  state.ownedSkins.push(id);
+
+  return true;
+}
+// - - - -

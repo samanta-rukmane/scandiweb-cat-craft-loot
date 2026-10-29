@@ -134,6 +134,41 @@
   text-align: center;
 }
 
+/* - ADD - */
+.skin-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skin-slot .owned-skin-card {
+  flex: 1;
+}
+
+.craft-button {
+  padding: 6px 8px;
+  border: 2px solid var(--brown);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--brown);
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.craft-button:hover:not(:disabled) {
+  background: #f5e5ce;
+}
+
+.craft-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* - - - - */
+
+
+
 @media (max-width: 750px) {
   .skins-modal-content {
     padding: 18px;

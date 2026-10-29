@@ -18,3 +18,13 @@ export const MAXOFFLINETIME = 8 * 3600;
 
 export const AD_REWARD_ENERGY = 5;
 export const AD_COOLDOWN_SECONDS = 30;
+
+
+// - ADD -
+export const CRAFT_COST = {
+  common: 25,
+  rare: 75,
+  epic: 250,
+  legendary: 1000,
+};
+// - - - -

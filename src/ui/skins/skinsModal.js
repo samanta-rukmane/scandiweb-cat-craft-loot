@@ -1,12 +1,27 @@
 import { state } from "../../core/state.js";
 import { SKINS } from "../../config/skins.js";
 import { assetUrl, skinBackgroundSize } from "../../config/paths.js";
+// - ADD -
+import { craftSkin } from "../../core/economy.js";
+import { CRAFT_COST } from "../../config/balance.js";
+import { save } from "../../storage/save.js";
+// - - - -
+
 
 const rarities = ["common", "rare", "epic", "legendary", "secret"];
 
 let selectedRarity = "common";
+// - ADD -
+let onChangeCallback = null;
+// - - - -
 
-export function initSkinsModal() {
+
+// - DELETE -
+// export function initSkinsModal() {
+// - ADD -
+export function initSkinsModal(onChange) {
+  onChangeCallback = onChange;
+  // - - -
   const modal = document.getElementById("skinsModal");
   const openButton = document.getElementById("openSkinsBtn");
   const closeButton = document.getElementById("closeSkinsBtn");
@@ -146,6 +161,34 @@ function renderSkins(container) {
       });
     }
 
-    container.appendChild(card);
+
+    // - DELETE -
+    // container.appendChild(card);
+    // - ADD -
+    const cost = CRAFT_COST[skin.rarity];
+
+    if (!isOwned && cost !== undefined) {
+      const slot = document.createElement("div");
+      slot.classList.add("skin-slot");
+
+      const craftBtn = document.createElement("button");
+      craftBtn.type = "button";
+      craftBtn.classList.add("craft-button");
+      craftBtn.textContent = `Craft · ${cost} dust`;
+      craftBtn.disabled = state.dust < cost;
+
+      craftBtn.addEventListener("click", () => {
+        if (!craftSkin(skinId)) return;
+        save();
+        renderSkins(container);
+        if (typeof onChangeCallback === "function") onChangeCallback();
+      });
+
+      slot.append(card, craftBtn);
+      container.appendChild(slot);
+    } else {
+      container.appendChild(card);
+    }
+    // - - - -
   }
 }
