@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
 
 export default defineConfig(({ command, isPreview }) => ({
-  base: command === "build" || isPreview ? "/Cat-Craft-Loot/" : "/",
+  base: command === "build" || isPreview ? "/scandiweb-cat-craft-loot/" : "/",
 }));
