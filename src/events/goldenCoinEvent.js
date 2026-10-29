@@ -5,8 +5,8 @@ const GOLDEN_CAT = assetUrl("/skins/cats/secret/goldenCat.png");
 const GOLD_COIN = assetUrl("/skins/coins/catCoin.png");
 const SPINNING_COIN = assetUrl("/skins/coins/gold_spin.png");
 
-const MIN_SPAWN_DELAY = 10 * 60 * 1000;
-const MAX_SPAWN_DELAY = 20 * 60 * 1000;
+const MIN_SPAWN_DELAY = 60_000;
+const MAX_SPAWN_DELAY = 180_000;
 
 const COIN_LIFETIME = 25_000;
 const RAIN_DURATION = 60_000;
@@ -17,9 +17,16 @@ const COIN_FRAME_HEIGHT = 25;
 const COIN_TOTAL_FRAMES = 7;
 const COIN_FRAME_INTERVAL = 100;
 
+const GOLDEN_CAT_COLUMNS = 3;
+const GOLDEN_CAT_ROWS = 4;
+const GOLDEN_CAT_FRAME_WIDTH = 32;
+const GOLDEN_CAT_FRAME_HEIGHT = 32;
+const GOLDEN_CAT_FRAME_INTERVAL = 150;
+
 let spawnTimer = null;
 let previousSkinBackground = null;
 let coinExpirationTimer = null;
+let goldenCatAnimationTimer = null;
 let rainTimer = null;
 let rainInterval = null;
 let activeCoin = null;
@@ -95,6 +102,42 @@ function removeGoldCoin() {
   }
 }
 
+function animateGoldenCat(sprite) {
+  if (goldenCatAnimationTimer !== null) {
+    clearInterval(goldenCatAnimationTimer);
+    goldenCatAnimationTimer = null;
+  }
+
+  let frame = 0;
+
+  sprite.style.backgroundSize =
+    `${GOLDEN_CAT_COLUMNS * GOLDEN_CAT_FRAME_WIDTH}px ` +
+    `${GOLDEN_CAT_ROWS * GOLDEN_CAT_FRAME_HEIGHT}px`;
+
+  sprite.style.backgroundRepeat = "no-repeat";
+
+  function showFrame() {
+    if (!sprite.isConnected || sprite.dataset.goldenCatActive !== "true") {
+      clearInterval(goldenCatAnimationTimer);
+      goldenCatAnimationTimer = null;
+      return;
+    }
+
+    const column = frame % GOLDEN_CAT_COLUMNS;
+    const row = Math.floor(frame / GOLDEN_CAT_COLUMNS);
+
+    sprite.style.backgroundPosition =
+      `-${column * GOLDEN_CAT_FRAME_WIDTH}px ` +
+      `-${row * GOLDEN_CAT_FRAME_HEIGHT}px`;
+
+    frame = (frame + 1) % (GOLDEN_CAT_COLUMNS * GOLDEN_CAT_ROWS);
+  }
+
+  showFrame();
+
+  goldenCatAnimationTimer = setInterval(showFrame, GOLDEN_CAT_FRAME_INTERVAL);
+}
+
 function activateGoldenCat() {
   const sprite = document.getElementById("clickBtn");
 
@@ -114,10 +157,8 @@ function activateGoldenCat() {
   sprite.dataset.goldenCatActive = "true";
 
   sprite.style.backgroundImage = `url("${GOLDEN_CAT}")`;
-  sprite.style.backgroundSize = "96px 128px";
-  sprite.style.backgroundRepeat = "no-repeat";
-  sprite.style.backgroundPosition = "0 0";
 
+  animateGoldenCat(sprite);
   startGoldenCoinRain();
 
   if (typeof window.debugSaveGame === "function") {
@@ -129,7 +170,6 @@ function animateGoldenCoin(coin) {
   let frame = 0;
 
   coin.style.backgroundSize = `${COIN_TOTAL_FRAMES * 100}% 100%`;
-
   coin.style.backgroundPosition = "0 0";
   coin.style.backgroundRepeat = "no-repeat";
 
@@ -214,6 +254,11 @@ function createFallingCoin(container) {
 }
 
 function restorePreviousSkin() {
+  if (goldenCatAnimationTimer !== null) {
+    clearInterval(goldenCatAnimationTimer);
+    goldenCatAnimationTimer = null;
+  }
+
   const sprite = document.getElementById("clickBtn");
 
   if (sprite && previousSkinBackground) {
@@ -239,8 +284,6 @@ function stopGoldenCoinRain() {
     clearTimeout(rainTimer);
     rainTimer = null;
   }
-
-  state.goldenCatActive = false;
 
   restorePreviousSkin();
 

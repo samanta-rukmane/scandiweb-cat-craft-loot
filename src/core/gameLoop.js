@@ -2,7 +2,7 @@ import { state } from "./state.js";
 import { getCps } from "./economy.js";
 import { updateEnergy } from "../loot/energy.js";
 import { save } from "../storage/save.js";
-
+import { updateRage } from "./rage.js";
 export function startGameLoop({ render, notifyAchievements }) {
   let last = Date.now();
 
@@ -16,7 +16,7 @@ export function startGameLoop({ render, notifyAchievements }) {
     const gained = getCps() * elapsed;
     state.treats += gained;
     state.stats.totalTreats += gained;
-
+    updateRage();
     updateEnergy();
     render();
   }, 200);

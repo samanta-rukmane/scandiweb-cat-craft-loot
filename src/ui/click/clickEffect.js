@@ -6,22 +6,19 @@ export function showClickEffect(event, amount) {
   }
 
   const rect = container.getBoundingClientRect();
-
   const effect = document.createElement("span");
 
   effect.classList.add("floating-treat");
-  effect.textContent = `+${amount}`;
+
+  effect.textContent =
+    typeof amount === "number" ? `${amount >= 0 ? "+" : ""}${amount}` : amount;
 
   effect.style.left = `${event.clientX - rect.left}px`;
   effect.style.top = `${event.clientY - rect.top}px`;
 
   container.appendChild(effect);
 
-  effect.addEventListener(
-    "animationend",
-    () => {
-      effect.remove();
-    },
-    { once: true },
-  );
+  effect.addEventListener("animationend", () => effect.remove(), {
+    once: true,
+  });
 }

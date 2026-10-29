@@ -27,9 +27,7 @@ import { renderBowlGenerator } from "./ui/generatorMod/bowlGenerator.js";
 import { renderBedGenerator } from "./ui/generatorMod/bedGenerator.js";
 import { initMobileMenu } from "./ui/mobileMenu.js";
 import { initBubbleEvents } from "./events/bubbleEvents.js";
-import { initContainerToy } from "./ui/container/containerToy.js";
-import { initContainerBowl } from "./ui/container/containerBowl.js";
-import { initContainerBed } from "./ui/container/containerBed.js";
+import { initContainerItems } from "./ui/container/containerItems.js";
 import { initGoldenCoinEvent } from "./events/goldenCoinEvent.js";
 import { initUfoEvent } from "./events/ufoEvent.js";
 import "./styles/index.css";
@@ -65,9 +63,7 @@ initAchievementsList();
 initAchievementsModal();
 initCatAnimation();
 initUfoEvent(render);
-initContainerToy();
-initContainerBowl();
-initContainerBed();
+initContainerItems();
 initAdModal(render);
 initLootboxModal();
 initLootboxFlow(render);
@@ -97,11 +93,11 @@ initDailyModal(() => {
 startGameLoop({ render, notifyAchievements });
 
 // ############################Save Changes##################################
-// document.addEventListener("visibilitychange", () => {
-//   if (document.visibilityState === "hidden") {
-//     save();
-//   }
-// });
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") {
+    save();
+  }
+});
 
-// window.addEventListener("pagehide", save);
-// window.addEventListener("beforeunload", save);
+window.addEventListener("pagehide", save);
+window.addEventListener("beforeunload", save);

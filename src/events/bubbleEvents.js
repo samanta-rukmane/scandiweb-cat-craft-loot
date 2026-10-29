@@ -2,11 +2,12 @@ import { state } from "../core/state.js";
 import { addEnergy } from "../loot/energy.js";
 import { GENERATORS } from "../config/generators.js";
 import { assetUrl } from "../config/paths.js";
+import { showClickEffect } from "../ui/click/clickEffect.js";
 
 const BUBBLE_DURATION = 25_000;
 
-const MIN_SPAWN_DELAY = 10 * 60 * 1000;
-const MAX_SPAWN_DELAY = 20 * 60 * 1000;
+const MIN_SPAWN_DELAY = 60_000;
+const MAX_SPAWN_DELAY = 180_000;
 
 const DAY = 24 * 60 * 60 * 1000;
 
@@ -243,12 +244,17 @@ function spawnBubble(event) {
   container.appendChild(bubble);
   activeBubble = bubble;
 
-  bubble.addEventListener("click", () => {
+  bubble.addEventListener("click", (clickEvent) => {
     if (activeBubble !== bubble) {
       return;
     }
 
-    collectReward(event);
+    const message = collectReward(event);
+
+    if (message) {
+      showClickEffect(clickEvent, message);
+    }
+
     removeBubble();
   });
 
@@ -258,29 +264,48 @@ function spawnBubble(event) {
     }
   }, BUBBLE_DURATION);
 }
-
 function collectReward(event) {
   const now = Date.now();
+  let message = "";
 
   if (event.generator) {
     if (!GENERATORS[event.generator]) {
       console.error(`Unknown generator: ${event.generator}`);
-      return;
+      return "";
     }
 
     state.generators[event.generator] =
       (state.generators[event.generator] ?? 0) + 1;
+
+    const generatorName = GENERATORS[event.generator].name ?? event.generator;
+
+    message = `+1 ${generatorName}`;
+    getEventHistory()[event.id] = now;
   } else if (event.type) {
     switch (event.type) {
       case "takeTreats": {
         const amount = Math.floor(Math.max(0, state.treats) * 0.01);
+
+        if (amount <= 0) {
+          message = "No treats lost!";
+          break;
+        }
+
         state.treats = Math.max(0, state.treats - amount);
+        message = `-${amount} treats`;
         break;
       }
 
       case "takeDust": {
         const amount = Math.floor(Math.max(0, state.dust) * 0.01);
+
+        if (amount <= 0) {
+          message = "No dust lost!";
+          break;
+        }
+
         state.dust = Math.max(0, state.dust - amount);
+        message = `-${amount} dust`;
         break;
       }
 
@@ -290,14 +315,19 @@ function collectReward(event) {
         );
 
         if (availableGenerators.length === 0) {
-          console.info("No generator levels available to remove.");
+          message = "No generators lost!";
           break;
         }
 
         const index = Math.floor(Math.random() * availableGenerators.length);
+
         const generatorId = availableGenerators[index];
 
         state.generators[generatorId] -= 1;
+
+        const generatorName = GENERATORS[generatorId].name ?? generatorId;
+
+        message = `-1 ${generatorName}`;
         break;
       }
 
@@ -305,7 +335,7 @@ function collectReward(event) {
         const ownedSkins = state.ownedSkins;
 
         if (!Array.isArray(ownedSkins) || ownedSkins.length <= 1) {
-          console.info("Not enough owned skins to remove one.");
+          message = "No skin lost!";
           break;
         }
 
@@ -318,6 +348,7 @@ function collectReward(event) {
         }
 
         const index = Math.floor(Math.random() * removableSkins.length);
+
         const skinToRemove = removableSkins[index];
         const ownedIndex = ownedSkins.indexOf(skinToRemove);
 
@@ -335,12 +366,13 @@ function collectReward(event) {
           }
         }
 
+        message = "-1 skin";
         break;
       }
 
       default:
         console.error(`Unknown negative event type: ${event.type}`);
-        return;
+        return "";
     }
 
     getEventHistory()[event.id] = now;
@@ -351,19 +383,22 @@ function collectReward(event) {
       case "treats":
         state.treats += reward.amount;
         state.stats.totalTreats += reward.amount;
+        message = `+${reward.amount} treats`;
         break;
 
       case "dust":
         state.dust += reward.amount;
+        message = `+${reward.amount} dust`;
         break;
 
       case "energy":
         addEnergy(reward.amount);
+        message = `+${reward.amount} energy`;
         break;
 
       default:
         console.error(`Unknown bubble reward type: ${reward.type}`);
-        return;
+        return "";
     }
 
     getEventHistory()[event.id] = now;
@@ -374,6 +409,8 @@ function collectReward(event) {
   if (typeof window.debugSaveGame === "function") {
     window.debugSaveGame();
   }
+
+  return message;
 }
 
 /**

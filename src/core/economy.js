@@ -1,20 +1,24 @@
 import { state } from "./state.js";
 import { CLICK_UPGRADE } from "../config/upgrades.js";
 import { GENERATORS } from "../config/generators.js";
-// - ADD -
+
 import { SKINS } from "../config/skins.js";
 import { CRAFT_COST } from "../config/balance.js";
-// - - - -
+
+import { addRage, isRageActive } from "./rage.js";
+import { RAGE } from "../config/balance.js";
 
 
 export function clickCat() {
   state.treats += getClickPower();
   state.stats.totalTreats += getClickPower();
   state.stats.totalClicks += 1;
+  addRage();
 }
 
 export function getClickPower() {
-  return 1 + state.clickLevel * CLICK_UPGRADE.powerPerLevel;
+  const base = 1 + state.clickLevel * CLICK_UPGRADE.powerPerLevel;
+  return isRageActive() ? base * RAGE.clickMultiplier : base;
 }
 
 export function getClickCost() {

@@ -20,11 +20,18 @@ export const AD_REWARD_ENERGY = 5;
 export const AD_COOLDOWN_SECONDS = 30;
 
 
-// - ADD -
 export const CRAFT_COST = {
   common: 25,
   rare: 75,
   epic: 250,
   legendary: 1000,
 };
-// - - - -
+
+export const RAGE = {
+  max: 100,
+  cooldownSeconds: 900,
+  perClick: 1,
+  decayPerSecond: 1,
+  activeDecayPerSecond: 10,
+  clickMultiplier: 10,
+};

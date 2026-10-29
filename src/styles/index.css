@@ -13,12 +13,14 @@
 @import "./features/generators.css";
 @import "./features/skins.css";
 @import "./features/lootbox.css";
+@import "./features/rage.css";
 @import "./features/shop.css";
 @import "./features/daily.css";
 @import "./features/achievements.css";
 @import "./features/instructions.css";
 @import "./features/skin-reward.css";
 @import "./features/menu.css";
+@import "./features/events.css";
 @import "./features/goldencoin.css";
 @import "./features/ufoEvent.css";
 

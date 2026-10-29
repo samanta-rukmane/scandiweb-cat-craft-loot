@@ -1,16 +1,12 @@
 import { state } from "../core/state.js";
 import { GENERATORS } from "../config/generators.js";
-
 import { getGeneratorCost, buyGenerator } from "../core/economy.js";
 import { assetUrl } from "../config/paths.js";
 
-import { initContainerToy } from "./container/containerToy.js";
+import { initContainerItems } from "./container/containerItems.js";
+
 import { renderBallGenerator } from "./generatorMod/ballGenerator.js";
-
-import { initContainerBowl } from "./container/containerBowl.js";
 import { renderBowlGenerator } from "./generatorMod/bowlGenerator.js";
-
-import { initContainerBed } from "./container/containerBed.js";
 import { renderBedGenerator } from "./generatorMod/bedGenerator.js";
 
 const list = document.getElementById("generatorList");
@@ -34,13 +30,11 @@ export function initGenerators(onChange) {
     row.classList.add("generator-row");
 
     const button = document.createElement("button");
-
     button.type = "button";
     button.dataset.id = id;
     button.classList.add("generator-button");
 
     const image = document.createElement("img");
-
     image.src = assetUrl(generator.image);
     image.alt = generator.name;
     image.classList.add("generator-img");
@@ -88,34 +82,35 @@ export function initGenerators(onChange) {
     button.addEventListener("click", () => {
       const purchased = buyGenerator(id);
 
-      if (purchased) {
-        const sound = generatorSounds[id];
+      if (!purchased) {
+        return;
+      }
 
-        if (sound) {
-          sound.currentTime = 0;
+      const sound = generatorSounds[id];
 
-          sound.play().catch((error) => {
-            console.warn("Could not play generator sound:", error);
-          });
-        }
+      if (sound) {
+        sound.currentTime = 0;
 
-        if (id === "toy") {
-          initContainerToy();
-          renderBallGenerator();
-        }
+        sound.play().catch((error) => {
+          console.warn("Could not play generator sound:", error);
+        });
+      }
 
-        if (id === "bowl") {
-          initContainerBowl();
-          renderBowlGenerator();
-        }
+      initContainerItems();
 
-        if (id === "bed") {
-          initContainerBed();
-          renderBedGenerator();
-        }
+      if (id === "toy") {
+        renderBallGenerator();
+      } else if (id === "bowl") {
+        renderBowlGenerator();
+      } else if (id === "bed") {
+        renderBedGenerator();
+      }
 
+      if (typeof onChange === "function") {
         onChange();
       }
+
+      renderGenerators();
     });
 
     row.appendChild(button);
@@ -134,22 +129,31 @@ export function renderGenerators() {
 
   for (const row of list.children) {
     const button = row.querySelector(".generator-button");
-    const id = button.dataset.id;
 
+    if (!button) {
+      continue;
+    }
+
+    const id = button.dataset.id;
     const generator = GENERATORS[id];
-    const level = state.generators[id] ?? 0;
+
+    if (!generator) {
+      continue;
+    }
+
+    const level = Number(state.generators?.[id]) || 0;
     const cost = getGeneratorCost(id);
 
     row.querySelector(".generator-name").textContent = generator.name;
-
     row.querySelector(".generator-cost").textContent = cost.toLocaleString();
-
     row.querySelector(".generator-level").textContent = `Owned: ${level}`;
 
     button.disabled = state.treats < cost;
 
     const tooltipText = row.querySelector(".next-level-info p");
 
-    tooltipText.textContent = `Produces ${generator.cps} treats per second.`;
+    if (tooltipText) {
+      tooltipText.textContent = `Produces ${generator.cps} treats per second.`;
+    }
   }
 }
