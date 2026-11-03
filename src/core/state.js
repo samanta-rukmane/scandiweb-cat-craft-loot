@@ -21,5 +21,8 @@ export const state = {
   stats: { totalClicks: 0, boxesOpened: 0, totalTreats: 0 },
   achievements: [],
   foundSecretCats: [],
+  // - ADD -
+  hintLevels: {},
+  // - - - -
   secretPuzzleCompleted: false,
 };

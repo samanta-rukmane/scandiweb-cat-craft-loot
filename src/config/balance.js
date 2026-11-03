@@ -20,12 +20,14 @@ export const AD_REWARD_ENERGY = 5;
 export const AD_COOLDOWN_SECONDS = 30;
 
 
+// - ADD -
 export const CRAFT_COST = {
-  common: 25,
-  rare: 75,
-  epic: 250,
+  common: 50,
+  rare: 150,
+  epic: 300,
   legendary: 1000,
 };
+// - - - -
 
 export const RAGE = {
   max: 100,

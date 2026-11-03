@@ -7,6 +7,11 @@ import { CRAFT_COST } from "../config/balance.js";
 
 import { addRage, isRageActive } from "./rage.js";
 import { RAGE } from "../config/balance.js";
+// - ADD -
+import { SECRET_HINTS, HINT_COSTS, CAT_FIND_COST } from "../config/hints.js";
+import { PUZZLE } from "../config/puzzle.js";
+import { findSecretCat } from "./puzzle.js";
+// - - - -
 
 
 export function clickCat() {
@@ -92,5 +97,42 @@ export function craftSkin(id) {
   state.ownedSkins.push(id);
 
   return true;
+}
+
+
+export function getHintCost(id) {
+  return HINT_COSTS[state.hintLevels[id] ?? 0];
+}
+
+export function buyHint(id) {
+  const hints = SECRET_HINTS[id];
+  if (!hints) return false;
+  if (state.ownedSkins.includes(id)) return false;
+
+  const bought = state.hintLevels[id] ?? 0;
+  const cost = HINT_COSTS[bought];
+
+  if (bought >= hints.length || cost === undefined) return false;
+  if (state.dust < cost) return false;
+
+  state.dust -= cost;
+  state.hintLevels[id] = bought + 1;
+
+  return true;
+}
+
+
+export function buyFoundCat() {
+  if (state.dust < CAT_FIND_COST) return { ok: false };
+
+  const left = PUZZLE.filter((cat) => !state.foundSecretCats.includes(cat.id));
+  if (left.length === 0) return { ok: false };
+
+  const pick = left[Math.floor(Math.random() * left.length)];
+  const result = findSecretCat(pick.id);
+  if (!result.ok) return { ok: false };
+
+  state.dust -= CAT_FIND_COST;
+  return { ...result, id: pick.id };
 }
 // - - - -

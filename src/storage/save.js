@@ -2,6 +2,8 @@ import { state } from "../core/state.js";
 import { BACKGROUNDS } from "../config/backgrounds.js";
 // - ADD -
 import { SKINS } from "../config/skins.js";
+
+import { SECRET_HINTS } from "../config/hints.js";
 // - - - -
 
 
@@ -123,5 +125,22 @@ export function load() {
   if (!Array.isArray(state.achievements)) state.achievements = [];
   if (!Array.isArray(state.foundSecretCats)) state.foundSecretCats = [];
   if (typeof state.lastDailyClaim !== "string") state.lastDailyClaim = "";
+
+
+    if (
+    !state.hintLevels ||
+    typeof state.hintLevels !== "object" ||
+    Array.isArray(state.hintLevels)
+  ) {
+    state.hintLevels = {};
+  }
+
+  for (const id of Object.keys(state.hintLevels)) {
+    const level = Number(state.hintLevels[id]);
+    const max = SECRET_HINTS[id]?.length ?? 0;
+
+    state.hintLevels[id] =
+      Number.isInteger(level) && level > 0 ? Math.min(level, max) : 0;
+  }
  // - - - -
 }

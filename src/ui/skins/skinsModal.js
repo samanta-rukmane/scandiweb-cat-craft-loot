@@ -2,7 +2,13 @@ import { state } from "../../core/state.js";
 import { SKINS } from "../../config/skins.js";
 import { assetUrl, skinBackgroundSize } from "../../config/paths.js";
 // - ADD -
-import { craftSkin } from "../../core/economy.js";
+import { craftSkin, buyHint, getHintCost, buyFoundCat,} from "../../core/economy.js";
+
+import { SECRET_HINTS, CAT_FIND_COST, ALIEN_BACKGROUND_ID,} from "../../config/hints.js";
+import { BACKGROUNDS } from "../../config/backgrounds.js";
+
+import { PUZZLE, PUZZLE_REWARD_SKIN } from "../../config/puzzle.js";
+
 import { CRAFT_COST } from "../../config/balance.js";
 import { save } from "../../storage/save.js";
 
@@ -111,6 +117,9 @@ function renderSkins(container) {
   const dustCounter = document.getElementById("skinsDustCount");
   if (dustCounter) dustCounter.textContent = Math.floor(state.dust);
 
+  const secretNote = document.getElementById("secretNote");
+  if (secretNote) secretNote.hidden = selectedRarity !== "secret";
+
   updateCollectionCounters();
   // - - - -
 
@@ -184,53 +193,162 @@ function renderSkins(container) {
     // - DELETE -
     // container.appendChild(card);
     // - ADD -
-    const cost = CRAFT_COST[skin.rarity];
+    if (isOwned) {
+      container.appendChild(card);
+      continue;
+    }
 
-    if (!isOwned && cost !== undefined) {
+    const cost = CRAFT_COST[skin.rarity];
+    const hints = SECRET_HINTS[skinId];
+
+    const craftBtn =
+      cost !== undefined ? makeDustButton(`Craft · ${cost} `, cost) : null;
+
+    craftBtn?.addEventListener("click", async () => {
+      if (!(await confirmCraft(skin, cost))) return;
+      if (!craftSkin(skinId)) return;
+      save();
+      renderSkins(container);
+      if (typeof onChangeCallback === "function") onChangeCallback();
+
+      showSkinReward(
+        { ...skin, name: skinName, image: assetUrl(skin.img) },
+        "SKIN CRAFTED",
+      );
+      notifyAchievements();
+    });
+
+    if (!hints) {
+      if (!craftBtn) {
+        container.appendChild(card);
+        continue;
+      }
+
       const slot = document.createElement("div");
       slot.classList.add("skin-slot");
+      slot.append(card, craftBtn);
+      container.appendChild(slot);
+      continue;
+    }
 
-      const craftBtn = document.createElement("button");
-      craftBtn.type = "button";
-      craftBtn.classList.add("craft-button");
-      // - DELETE -
-      // craftBtn.textContent = `Craft · ${cost} dust`;
-      // - ADD -
-      craftBtn.append(`Craft · ${cost} `);
+    const bought = state.hintLevels?.[skinId] ?? 0;
 
-      const dustIcon = document.createElement("img");
-      dustIcon.src = assetUrl("/skins/dust.png");
-      dustIcon.alt = "dust";
-      dustIcon.classList.add("dust-icon");
-      craftBtn.append(dustIcon);
-      // - - - -
-      craftBtn.disabled = state.dust < cost;
+    const slot = document.createElement("div");
+    slot.classList.add("skin-slot", "secret-slot");
 
-      // - DELETE -
-      // craftBtn.addEventListener("click", () => {
-      // - ADD -
-      craftBtn.addEventListener("click", async () => {
-        if (!(await confirmCraft(skin, cost))) return;
-      // - - - -
-        if (!craftSkin(skinId)) return;
+    const box = document.createElement("div");
+    box.classList.add("skin-hint-box");
+
+    if (bought === 0) {
+      const empty = document.createElement("p");
+      empty.classList.add("skin-hint", "skin-hint-empty");
+      empty.textContent = "No hints yet.";
+      box.append(empty);
+    }
+
+    for (const hint of hints.slice(0, bought)) {
+      const text = document.createElement("p");
+      text.classList.add("skin-hint");
+      text.textContent = hint;
+      box.append(text);
+    }
+
+
+    if (skinId === "secretCat" && bought >= hints.length) {
+      const progress = document.createElement("p");
+      progress.classList.add("skin-hint", "skin-hint-progress");
+      progress.textContent = `Hidden cats found: ${state.foundSecretCats.length}/${PUZZLE.length}`;
+      box.append(progress);
+    }
+
+
+    const bgOwned = state.ownedBackgrounds.includes(ALIEN_BACKGROUND_ID);
+    const bgEquipped = state.equippedBackground === ALIEN_BACKGROUND_ID;
+
+    if (skinId === "alienCat" && bought >= hints.length) {
+      const bg = BACKGROUNDS[ALIEN_BACKGROUND_ID];
+      const status = bgEquipped
+        ? "equipped, wait for it..."
+        : bgOwned
+          ? "bought, but not equipped"
+          : `not bought (${bg.price} dust)`;
+
+      const progress = document.createElement("p");
+      progress.classList.add("skin-hint", "skin-hint-progress");
+      progress.textContent = `${bg.name} background: ${status}`;
+      box.append(progress);
+    }
+
+    const actions = document.createElement("div");
+    actions.classList.add("skin-hint-actions");
+
+    const hintCost = getHintCost(skinId);
+
+    if (bought < hints.length && hintCost !== undefined) {
+      const hintBtn = makeDustButton(`Hint ${bought + 1} · ${hintCost} `, hintCost);
+
+      hintBtn.addEventListener("click", async () => {
+        if (!(await confirmCraft(skin, hintCost, "Buy a hint?", "Buy"))) return;
+        if (!buyHint(skinId)) return;
+        save();
+        renderSkins(container);
+        if (typeof onChangeCallback === "function") onChangeCallback();
+      });
+
+      actions.append(hintBtn);
+    }
+
+    if (skinId === "secretCat" && state.foundSecretCats.length < PUZZLE.length) {
+      const findBtn = makeDustButton(
+        `Find a cat · ${CAT_FIND_COST} `,
+        CAT_FIND_COST,
+      );
+
+      findBtn.addEventListener("click", async () => {
+        if (!(await confirmCraft(skin, CAT_FIND_COST, "Find a hidden cat?", "Find"))) return;
+
+        const result = buyFoundCat();
+        if (!result.ok) return;
+
+        document
+          .querySelector(`.hidden-secret-cat[data-cat-id="${result.id}"]`)
+          ?.style.setProperty("display", "none");
+
         save();
         renderSkins(container);
         if (typeof onChangeCallback === "function") onChangeCallback();
 
-        // - ADD -
-        showSkinReward(
-          { ...skin, name: skinName, image: assetUrl(skin.img) },
-          "SKIN CRAFTED",
-        );
+        if (result.justCompleted) {
+          const reward = SKINS[PUZZLE_REWARD_SKIN];
+          showSkinReward({ ...reward, image: assetUrl(reward.img) });
+        }
         notifyAchievements();
-        // - - - -
       });
 
-      slot.append(card, craftBtn);
-      container.appendChild(slot);
-    } else {
-      container.appendChild(card);
-    } 
+      actions.append(findBtn);
+    }
+
+    
+    if (skinId === "alienCat" && bought >= hints.length && !bgEquipped) {
+      const shopBtn = document.createElement("button");
+      shopBtn.type = "button";
+      shopBtn.classList.add("craft-button");
+      shopBtn.textContent = bgOwned ? "Go to shop to equip" : "Go to shop";
+
+      shopBtn.addEventListener("click", () => {
+        document.getElementById("closeSkinsBtn")?.click();
+        document.getElementById("openShopBtn")?.click();
+      });
+
+      actions.append(shopBtn);
+    }
+
+    if (craftBtn) actions.append(craftBtn);
+
+
+    box.append(actions);
+    slot.append(card, box);
+    container.appendChild(slot);
     // - - - -
   }
 }
@@ -270,13 +388,21 @@ function updateCollectionCounters() {
 }
 
 
-function confirmCraft(skin, cost) {
+// - DELETE -
+// function confirmCraft(skin, cost) {
+// - ADD -
+function confirmCraft( skin, cost, title = "Craft this skin?", yesLabel = "Craft",) {
+// - - - -
   const dialog = document.getElementById("craftConfirmDialog");
   const yes = document.getElementById("craftConfirmYes");
   const no = document.getElementById("craftConfirmNo");
   const preview = document.getElementById("craftConfirmPreview");
 
   if (!dialog || !yes || !no || !preview) return Promise.resolve(true);
+
+  const titleElement = document.getElementById("craftConfirmTitle");
+  if (titleElement) titleElement.textContent = title;
+  yes.textContent = yesLabel;
 
   preview.style.backgroundImage = `url("${assetUrl(skin.img)}")`;
   preview.style.backgroundSize = skinBackgroundSize(skin);
@@ -304,5 +430,22 @@ function confirmCraft(skin, cost) {
     dialog.returnValue = "";
     dialog.showModal();
   });
+}
+
+
+function makeDustButton(label, cost) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.classList.add("craft-button");
+  button.append(label);
+
+  const icon = document.createElement("img");
+  icon.src = assetUrl("/skins/dust.png");
+  icon.alt = "dust";
+  icon.classList.add("dust-icon");
+  button.append(icon);
+
+  button.disabled = state.dust < cost;
+  return button;
 }
 // - - - -
