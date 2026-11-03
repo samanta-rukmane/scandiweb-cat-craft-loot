@@ -239,6 +239,24 @@
       </div>
     </div>
 
+
+    <dialog id="craftConfirmDialog" class="modal craft-confirm-dialog">
+      <h2>Craft this skin?</h2>
+
+      <div id="craftConfirmPreview" class="owned-skin-preview skin-locked"></div>
+      <p id="craftConfirmRarity"></p>
+
+      <p class="craft-confirm-cost">
+        Cost: <strong id="craftConfirmCost">0</strong>
+        <img src="/skins/dust.png" alt="" class="dust-icon" />
+      </p>
+
+      <div class="craft-confirm-actions">
+        <button type="button" id="craftConfirmYes" class="btn">Craft</button>
+        <button type="button" id="craftConfirmNo" class="btn">Cancel</button>
+      </div>
+    </dialog>
+
     <dialog id="adDialog" class="modal">
       <video id="adVideo" src="./ad.webm" muted playsinline></video>
       <p>Watching ad...</p>
@@ -487,7 +505,7 @@
           <div id="rewardSkinImage" class="card-img"></div>
         </div>
 
-        <p class="reward-label">NEW SKIN UNLOCKED</p>
+        <p id="rewardLabel" class="reward-label">NEW SKIN UNLOCKED</p>
 
         <h3 id="rewardSkinName">Cat Skin</h3>
 

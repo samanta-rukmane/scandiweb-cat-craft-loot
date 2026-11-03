@@ -7,8 +7,15 @@ const claimRewardBtn = document.getElementById("claimSkinRewardBtn");
 const rewardSkinImage = document.getElementById("rewardSkinImage");
 const rewardSkinName = document.getElementById("rewardSkinName");
 const rewardSkinRarity = document.getElementById("rewardSkinRarity");
+// - ADD -
+const rewardLabel = document.getElementById("rewardLabel");
+// - - - -
 
-export function showSkinReward(skin) {
+// - DELETE -
+// export function showSkinReward(skin) {
+// - ADD -
+export function showSkinReward(skin, label = "NEW SKIN UNLOCKED") {
+// - - - -
   if (
     !skin ||
     !rewardDialog ||
@@ -25,6 +32,9 @@ export function showSkinReward(skin) {
   rewardSkinImage.style.backgroundPosition = "0 0";
   rewardSkinImage.style.backgroundRepeat = "no-repeat";
 
+  // - ADD -
+  if (rewardLabel) rewardLabel.textContent = label;
+  // - - - -
   rewardSkinName.textContent = skin.name;
   rewardSkinRarity.textContent = skin.rarity.toUpperCase();
 

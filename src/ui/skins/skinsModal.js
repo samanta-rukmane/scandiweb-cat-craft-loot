@@ -5,6 +5,9 @@ import { assetUrl, skinBackgroundSize } from "../../config/paths.js";
 import { craftSkin } from "../../core/economy.js";
 import { CRAFT_COST } from "../../config/balance.js";
 import { save } from "../../storage/save.js";
+
+import { showSkinReward } from "./skinReward.js";
+import { notifyAchievements } from "../../core/achievements.js";
 // - - - -
 
 
@@ -58,7 +61,15 @@ export function initSkinsModal(onChange) {
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal.classList.contains("open")) {
+    // - DELETE -
+    // if (event.key === "Escape" && modal.classList.contains("open")) {
+    // - ADD -
+    const confirmOpen =
+      document.getElementById("craftConfirmDialog")?.open ||
+      document.getElementById("skinRewardDialog")?.open;
+
+    if (event.key === "Escape" && modal.classList.contains("open") && !confirmOpen) {
+    // - - - -
       closeModal();
     }
   });
@@ -195,11 +206,24 @@ function renderSkins(container) {
       // - - - -
       craftBtn.disabled = state.dust < cost;
 
-      craftBtn.addEventListener("click", () => {
+      // - DELETE -
+      // craftBtn.addEventListener("click", () => {
+      // - ADD -
+      craftBtn.addEventListener("click", async () => {
+        if (!(await confirmCraft(skin, cost))) return;
+      // - - - -
         if (!craftSkin(skinId)) return;
         save();
         renderSkins(container);
         if (typeof onChangeCallback === "function") onChangeCallback();
+
+        // - ADD -
+        showSkinReward(
+          { ...skin, name: skinName, image: assetUrl(skin.img) },
+          "SKIN CRAFTED",
+        );
+        notifyAchievements();
+        // - - - -
       });
 
       slot.append(card, craftBtn);
@@ -243,5 +267,42 @@ function updateCollectionCounters() {
 
   const tabCount = document.getElementById("skinsTabCount");
   if (tabCount) tabCount.textContent = `${ownedInTab}/${totalInTab}`;
+}
+
+
+function confirmCraft(skin, cost) {
+  const dialog = document.getElementById("craftConfirmDialog");
+  const yes = document.getElementById("craftConfirmYes");
+  const no = document.getElementById("craftConfirmNo");
+  const preview = document.getElementById("craftConfirmPreview");
+
+  if (!dialog || !yes || !no || !preview) return Promise.resolve(true);
+
+  preview.style.backgroundImage = `url("${assetUrl(skin.img)}")`;
+  preview.style.backgroundSize = skinBackgroundSize(skin);
+  document.getElementById("craftConfirmRarity").textContent =
+    skin.rarity.charAt(0).toUpperCase() + skin.rarity.slice(1);
+  document.getElementById("craftConfirmCost").textContent = cost;
+
+  return new Promise((resolve) => {
+    const onYes = () => dialog.close("yes");
+    const onNo = () => dialog.close("no");
+
+    dialog.addEventListener(
+      "close",
+      () => {
+        yes.removeEventListener("click", onYes);
+        no.removeEventListener("click", onNo);
+        resolve(dialog.returnValue === "yes");
+      },
+      { once: true },
+    );
+
+    yes.addEventListener("click", onYes);
+    no.addEventListener("click", onNo);
+
+    dialog.returnValue = "";
+    dialog.showModal();
+  });
 }
 // - - - -

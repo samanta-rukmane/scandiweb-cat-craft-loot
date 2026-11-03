@@ -234,6 +234,30 @@
 .skins-progress p {
   margin: 0;
 }
+
+
+.craft-confirm-dialog {
+  max-width: 320px;
+  text-align: center;
+}
+
+.craft-confirm-dialog .owned-skin-preview {
+  margin: 10px auto;
+}
+
+.craft-confirm-cost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.craft-confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
 /* - - - - */
 
 
