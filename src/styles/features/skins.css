@@ -219,6 +219,21 @@
   color: #756b5e;
   cursor: not-allowed;
 }
+
+
+.skins-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 15px;
+  line-height: 1.5;
+  color: var(--brown);
+}
+
+.skins-progress p {
+  margin: 0;
+}
 /* - - - - */
 
 

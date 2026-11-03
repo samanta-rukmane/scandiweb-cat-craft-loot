@@ -99,6 +99,8 @@ function renderSkins(container) {
   // - ADD -
   const dustCounter = document.getElementById("skinsDustCount");
   if (dustCounter) dustCounter.textContent = Math.floor(state.dust);
+
+  updateCollectionCounters();
   // - - - -
 
   const entries = Object.entries(SKINS).filter(
@@ -204,7 +206,42 @@ function renderSkins(container) {
       container.appendChild(slot);
     } else {
       container.appendChild(card);
-    }
+    } 
     // - - - -
   }
 }
+
+
+// - ADD -
+function updateCollectionCounters() {
+  const owned = state.ownedSkins ?? [];
+  let ownedTotal = 0;
+  let total = 0;
+  let ownedInTab = 0;
+  let totalInTab = 0;
+
+  for (const [id, skin] of Object.entries(SKINS)) {
+    const isOwned = owned.includes(id);
+
+    total += 1;
+    if (isOwned) ownedTotal += 1;
+
+    if (skin.rarity === selectedRarity) {
+      totalInTab += 1;
+      if (isOwned) ownedInTab += 1;
+    }
+  }
+
+  const totalElement = document.getElementById("skinsTotalCount");
+  if (totalElement) totalElement.textContent = `${ownedTotal}/${total}`;
+
+  const tabName = document.getElementById("skinsTabName");
+  if (tabName) {
+    tabName.textContent =
+      selectedRarity.charAt(0).toUpperCase() + selectedRarity.slice(1);
+  }
+
+  const tabCount = document.getElementById("skinsTabCount");
+  if (tabCount) tabCount.textContent = `${ownedInTab}/${totalInTab}`;
+}
+// - - - -
