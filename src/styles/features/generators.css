@@ -306,8 +306,8 @@
   left: 0;
   top: 0;
 
-  width: 96px;
-  height: 96px;
+  width: 48px;
+  height: 48px;
 
   object-fit: contain;
   image-rendering: pixelated;
@@ -343,8 +343,8 @@
 .container-bed {
   position: absolute;
 
-  width: 130px;
-  height: 110px;
+  width: 140px;
+  height: 120px;
 
   left: 10px;
   bottom: 40px;

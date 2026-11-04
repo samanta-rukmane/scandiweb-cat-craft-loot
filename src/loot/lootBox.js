@@ -1,5 +1,6 @@
 import { state } from "../core/state.js";
 import { SKINS } from "../config/skins.js";
+import { getSkinBonuses } from "../core/skinBonuses.js";
 import {
   LOOT_WEIGHTS,
   DUST_FOR_DUPLICATE,
@@ -47,7 +48,13 @@ export function claimReward() {
   let dust = 0;
   const duplicate = state.ownedSkins.includes(id);
   if (duplicate) {
-    dust = DUST_FOR_DUPLICATE[rarity];
+    const bonuses = getSkinBonuses();
+
+    const baseDust = DUST_FOR_DUPLICATE[rarity] ?? 0;
+    const multiplier = bonuses.duplicateDustMultiplier ?? 1;
+
+    dust = Math.ceil(baseDust * multiplier);
+
     state.dust += dust;
   } else {
     state.ownedSkins.push(id);

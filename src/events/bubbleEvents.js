@@ -3,6 +3,7 @@ import { addEnergy } from "../loot/energy.js";
 import { GENERATORS } from "../config/generators.js";
 import { assetUrl } from "../config/paths.js";
 import { showClickEffect } from "../ui/click/clickEffect.js";
+import { getSkinBonuses } from "../core/skinBonuses.js";
 
 const BUBBLE_DURATION = 25_000;
 
@@ -147,11 +148,25 @@ function isEventAvailable(event) {
 }
 
 function chooseEvent() {
+  const bonuses = getSkinBonuses();
+
+  const baseNegativeChance = NEGATIVE_EVENTS.reduce(
+    (total, event) => total + event.chance,
+    0,
+  );
+
+  const positiveBonus = bonuses.positiveBubbleChanceBonus ?? 0;
+
+  const negativeChance = Math.max(0, baseNegativeChance - positiveBonus);
+
+  const scale =
+    baseNegativeChance > 0 ? negativeChance / baseNegativeChance : 0;
+
   const roll = Math.random();
   let threshold = 0;
 
   for (const event of NEGATIVE_EVENTS) {
-    threshold += event.chance;
+    threshold += event.chance * scale;
 
     if (roll < threshold) {
       return event;
@@ -284,50 +299,72 @@ function collectReward(event) {
   } else if (event.type) {
     switch (event.type) {
       case "takeTreats": {
-        const amount = Math.floor(Math.max(0, state.treats) * 0.01);
+        const bonuses = getSkinBonuses();
+        const reduction = bonuses.negativeBubbleReduction ?? 0;
 
-        if (amount <= 0) {
-          message = "No treats lost!";
-          break;
-        }
+        const originalLoss = Math.floor(state.treats * 0.01);
+        const amount = Math.floor(originalLoss * (1 - reduction));
 
         state.treats = Math.max(0, state.treats - amount);
-        message = `-${amount} treats`;
+
+        if (reduction > 0 && amount < originalLoss) {
+          message = `Med Cat reduced the loss to ${amount} treats!`;
+        } else if (amount > 0) {
+          message = `Lost ${amount} treats!`;
+        } else {
+          message = "No treats lost!";
+        }
+
         break;
       }
 
       case "takeDust": {
-        const amount = Math.floor(Math.max(0, state.dust) * 0.01);
+        const bonuses = getSkinBonuses();
+        const reduction = bonuses.negativeBubbleReduction ?? 0;
 
-        if (amount <= 0) {
-          message = "No dust lost!";
-          break;
-        }
+        const originalLoss = Math.floor(state.dust * 0.01);
+        const amount = Math.floor(originalLoss * (1 - reduction));
 
         state.dust = Math.max(0, state.dust - amount);
-        message = `-${amount} dust`;
+
+        if (reduction > 0 && amount < originalLoss) {
+          message = `Med Cat reduced the loss to ${amount} dust!`;
+        } else if (amount > 0) {
+          message = `Lost ${amount} dust!`;
+        } else {
+          message = "No dust lost!";
+        }
+
         break;
       }
 
       case "takeGenerator": {
-        const availableGenerators = Object.keys(GENERATORS).filter(
+        const bonuses = getSkinBonuses();
+
+        if (
+          bonuses.negativeBubbleReduction &&
+          Math.random() < bonuses.negativeBubbleReduction
+        ) {
+          message = "Med Cat protected your generators!";
+          break;
+        }
+
+        const ownedGenerators = Object.keys(GENERATORS).filter(
           (id) => (state.generators[id] ?? 0) > 0,
         );
 
-        if (availableGenerators.length === 0) {
+        if (ownedGenerators.length === 0) {
           message = "No generators lost!";
           break;
         }
 
-        const index = Math.floor(Math.random() * availableGenerators.length);
+        const randomId =
+          ownedGenerators[Math.floor(Math.random() * ownedGenerators.length)];
 
-        const generatorId = availableGenerators[index];
+        state.generators[randomId] -= 1;
 
-        state.generators[generatorId] -= 1;
+        message = `Lost one ${GENERATORS[randomId].name}!`;
 
-        const generatorName = GENERATORS[generatorId].name ?? generatorId;
-
-        message = `-1 ${generatorName}`;
         break;
       }
 

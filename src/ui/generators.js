@@ -1,6 +1,10 @@
 import { state } from "../core/state.js";
 import { GENERATORS } from "../config/generators.js";
-import { getGeneratorCost, buyGenerator } from "../core/economy.js";
+import {
+  getGeneratorCost,
+  buyGenerator,
+  getGeneratorCps,
+} from "../core/economy.js";
 import { assetUrl } from "../config/paths.js";
 
 import { initContainerItems } from "./container/containerItems.js";
@@ -153,7 +157,7 @@ export function renderGenerators() {
     const tooltipText = row.querySelector(".next-level-info p");
 
     if (tooltipText) {
-      tooltipText.textContent = `Produces ${generator.cps} treats per second.`;
+      tooltipText.textContent = `Produces ${getGeneratorCps(id)} treats per second.`;
     }
   }
 }

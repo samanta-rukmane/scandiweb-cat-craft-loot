@@ -6,10 +6,6 @@ const ITEMS = {
     className: "container-bed",
     image: assetUrl("/skins/containerBed/bed.png"),
     alt: "",
-    width: 70,
-    height: 50,
-    left: 10,
-    bottom: 0,
   },
 
   bowl: {
@@ -20,10 +16,6 @@ const ITEMS = {
       assetUrl("/skins/containerBowl/frame3.png"),
     ],
     frameDuration: 500,
-    width: 60,
-    height: 60,
-    right: 20,
-    bottom: 40,
   },
 
   toy: {
@@ -36,8 +28,6 @@ const ITEMS = {
       assetUrl("/skins/containerToy/frame5.png"),
     ],
     frameDuration: 100,
-    width: 40,
-    height: 40,
     speed: 70,
   },
 };
@@ -48,10 +38,6 @@ function getContainer() {
   if (!container) {
     console.warn("Container items: .cat-container not found.");
     return null;
-  }
-
-  if (getComputedStyle(container).position === "static") {
-    container.style.position = "relative";
   }
 
   return container;
@@ -68,23 +54,6 @@ function createImage(container, config) {
   image.alt = config.alt ?? "";
   image.draggable = false;
   image.setAttribute("aria-hidden", "true");
-
-  image.style.width = `${config.width}px`;
-  image.style.height = `${config.height}px`;
-  image.style.objectFit = "contain";
-  image.style.position = "absolute";
-
-  if (config.left !== undefined) {
-    image.style.left = `${config.left}px`;
-  }
-
-  if (config.right !== undefined) {
-    image.style.right = `${config.right}px`;
-  }
-
-  if (config.bottom !== undefined) {
-    image.style.bottom = `${config.bottom}px`;
-  }
 
   container.appendChild(image);
 
@@ -218,7 +187,6 @@ function initToy(container) {
     const maxX = Math.max(0, container.clientWidth - toy.offsetWidth);
 
     x = Math.min(x, maxX);
-
     x += velocity * delta;
 
     if (x >= maxX) {

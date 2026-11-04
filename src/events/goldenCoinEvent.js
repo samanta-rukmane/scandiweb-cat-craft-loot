@@ -1,9 +1,12 @@
 import { state } from "../core/state.js";
 import { assetUrl } from "../config/paths.js";
+import { getSkinBonuses } from "../core/skinBonuses.js";
 
 const GOLDEN_CAT = assetUrl("/skins/cats/secret/goldenCat.png");
 const GOLD_COIN = assetUrl("/skins/coins/catCoin.png");
 const SPINNING_COIN = assetUrl("/skins/coins/gold_spin.png");
+
+const BASE_GOLDEN_CAT_SPAWN_CHANCE = 0.2;
 
 const MIN_SPAWN_DELAY = 60_000;
 const MAX_SPAWN_DELAY = 180_000;
@@ -45,7 +48,12 @@ function scheduleNextCoin() {
   spawnTimer = setTimeout(() => {
     spawnTimer = null;
 
-    if (!activeCoin) {
+    const bonuses = getSkinBonuses();
+
+    const spawnChance =
+      BASE_GOLDEN_CAT_SPAWN_CHANCE + (bonuses.goldenCatSpawnChanceBonus ?? 0);
+
+    if (!activeCoin && Math.random() < spawnChance) {
       spawnGoldCoin();
     }
 
