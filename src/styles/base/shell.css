@@ -147,6 +147,28 @@
   image-rendering: pixelated;
 }
 
+.nav-icon[data-icon="home"] {
+  background-image: url("/icons/home.svg");
+}
+.nav-icon[data-icon="skins"] {
+  background-image: url("/icons/skins.svg");
+}
+.nav-icon[data-icon="box"] {
+  background-image: url("/icons/box.svg");
+}
+.nav-icon[data-icon="shop"] {
+  background-image: url("/icons/shop.svg");
+}
+.nav-icon[data-icon="achievements"] {
+  background-image: url("/icons/achievements.svg");
+}
+.nav-icon[data-icon="daily"] {
+  background-image: url("/icons/daily.svg");
+}
+.nav-icon[data-icon="instructions"] {
+  background-image: url("/icons/instructions.svg");
+}
+
 /* TEMP: old dark look inside the new shell. Remove at the "Main game" step. */
 .app-body > .game {
   flex: 1;
