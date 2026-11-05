@@ -3,8 +3,18 @@ import { getClickCost, getClickPower, getCps } from "../core/economy.js";
 import { renderGenerators } from "../ui/generators.js";
 import { LOOTBOX, ENERGY } from "../config/balance.js";
 import { renderRageBar } from "./rageBar.js";
+// - ADD -
 export function render() {
+  document.getElementById("hudTreats").textContent = Math.floor(
+    state.treats,
+  ).toLocaleString("en-US");
+  document.getElementById("hudDust").textContent =
+    state.dust.toLocaleString("en-US");
+  document.getElementById("hudEnergy").textContent =
+    `${state.energy} / ${ENERGY.max}`;
+
   document.querySelector(".treats-count").textContent = Math.floor(
+  // - - -
     state.treats,
   );
 

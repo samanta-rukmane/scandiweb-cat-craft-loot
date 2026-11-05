@@ -33,11 +33,18 @@ export function updateEnergy() {
   renderEnergyBar();
 }
 
+// - ADD -
 function renderEnergyBar() {
   const bar = document.querySelector(".energy-bar");
   const counter = document.querySelector(".energy-count");
 
+  const hudEnergy = document.getElementById("hudEnergy");
+  if (hudEnergy) {
+    hudEnergy.textContent = `${state.energy} / ${ENERGY.max}`;
+  }
+
   if (!bar) return;
+  // - - -
 
   const maxEnergy = ENERGY.max;
   const currentEnergy = Math.max(0, Math.min(state.energy, maxEnergy));
