@@ -1,7 +1,35 @@
-/* base/variables.css */
 :root {
+  /* --- OLD (удалим, когда все экраны перейдут на новые токены) --- */
   --accent: #e6a85c;
   --accent-dark: #d8933e;
   --paper: #fff8ed;
   --brown: #704b2b;
+
+  
+  /* --- NEW: colors (Figma · Design foundations) --- */
+  --cream: #fbf7ef;
+  --surface: #fffcf6;
+  --raspberry: #ad526d;
+  --petal: #f5d9df;
+  --lavender: #e8e0f5;
+  --sage: #dfe9d2;
+  --biscuit: #f1c5a5;
+  --cocoa: #4b3836;
+  --cocoa-muted: #8d7973;
+  --border-soft: #e2d5c5;
+
+  /* --- NEW: type --- */
+  --font-display: "Space Mono", monospace; 
+  --font-ui: "Inter", system-ui, sans-serif;
+
+  /* --- NEW: radii --- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* --- NEW: spacing (8px) --- */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
 }
