@@ -18,6 +18,19 @@
   --cocoa-muted: #8d7973;
   --border-soft: #e2d5c5;
 
+  /* --- NEW: more colors (from Main game) --- */
+  --raspberry-dark: #883e56;
+  --petal-border: #e8bbc7;
+  --petal-soft: #fcecef;
+  --green: #657c50;
+  --plum: #84709e;
+  --track: #ece5dc;
+  --scene: #f4e9dd;
+
+  /* --- NEW: shadows --- */
+  --shadow-card: 0 4px 0 rgb(114 86 78 / 7%);
+  --shadow-btn: 0 3px 0 rgb(114 86 78 / 25%);
+
   /* --- NEW: type --- */
   --font-display: "Space Mono", monospace; 
   --font-ui: "Inter", system-ui, sans-serif;

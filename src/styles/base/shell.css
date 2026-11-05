@@ -1,7 +1,7 @@
-/* header, side nav, workspace */
+/* base/shell.css: header, side nav, workspace */
 :root {
   --header-h: 88px;
-  --nav-w: 204px;
+  --nav-w: 224px;
 }
 
 /* ---------- header ---------- */
@@ -14,63 +14,84 @@
   justify-content: space-between;
   gap: var(--space-3);
   height: var(--header-h);
-  padding: 0 var(--space-4);
+  padding: 0 28px;
   border-bottom: 1px solid var(--border-soft);
   background: var(--surface);
 }
 
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-cat {
+  width: 48px;
+  height: 48px;
+  image-rendering: pixelated;
+}
+
+.brand-text {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
+  letter-spacing: -0.7px;
+  line-height: normal;
+  white-space: nowrap;
   color: var(--cocoa);
 }
 
-.brand span {
+.brand-text span {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
-  letter-spacing: 0.2em;
+  letter-spacing: 3px;
   color: var(--raspberry);
 }
 
 .hud {
   display: flex;
-  gap: var(--space-1);
+  align-items: center;
+  gap: 10px;
 }
 
 .hud-counter {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-width: 130px;
-  padding: 8px 14px;
+  min-width: 142px;
+  height: 48px;
+  padding: 0 14px;
   border: 1px solid var(--border-soft);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: var(--cream);
 }
 
+.hud-counter > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  white-space: nowrap;
+}
+
 .hud-icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   image-rendering: pixelated;
 }
 
 .hud-label {
-  display: block;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--cocoa-muted);
 }
 
 .hud-counter strong {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 16px;
   color: var(--cocoa);
 }
 
@@ -87,20 +108,20 @@
   display: flex;
   flex: 0 0 var(--nav-w);
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 6px;
   width: var(--nav-w);
   height: calc(100vh - var(--header-h));
-  padding: var(--space-3) 14px;
+  padding: 28px 16px 24px;
   overflow-y: auto;
   border-right: 1px solid var(--border-soft);
   background: var(--surface);
 }
 
 .nav-caption {
-  margin: 0 0 var(--space-1) 4px;
-  font-size: 10px;
+  margin: 0 0 18px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--cocoa-muted);
 }
@@ -110,15 +131,15 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  min-height: 48px;
-  padding: 0 14px;
+  height: 48px;
+  padding: 0 12px;
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--cocoa);
   font-family: var(--font-ui);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 400;
   text-align: left;
   cursor: pointer;
 }
@@ -133,15 +154,16 @@
 }
 
 .nav-item.active {
-  border-color: color-mix(in srgb, var(--raspberry) 25%, var(--petal));
+  border-color: var(--petal-border);
   background: var(--petal);
+  color: var(--raspberry-dark);
   cursor: default;
 }
 
 .nav-icon {
-  flex: 0 0 24px;
-  width: 24px;
-  height: 24px;
+  flex: 0 0 23px;
+  width: 23px;
+  height: 23px;
   background-repeat: no-repeat;
   background-size: contain;
   image-rendering: pixelated;
