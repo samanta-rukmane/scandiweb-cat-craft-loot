@@ -24,6 +24,17 @@
 
 
       <header class="game-header">
+      <button
+        type="button"
+        id="menuToggleBtn"
+        class="menu-toggle"
+        aria-expanded="false"
+        aria-controls="topMenu"
+        aria-label="Menu"
+      >
+        ☰
+      </button>
+
       <div class="brand">CAT CRAFT <span>&amp; LOOT</span></div>
 
       <div class="hud">
@@ -53,46 +64,39 @@
     </header>
 
 
-    <nav class="top-button-bar" id="topMenu" aria-label="Game menu">
-      <button
-        type="button"
-        id="menuToggleBtn"
-        class="menu-toggle"
-        aria-expanded="false"
-        aria-controls="topMenu"
-        aria-label="Menu"
-      >
-        ☰
-      </button>
-      <button type="button" id="openSkinsBtn" class="btn skins-button">
-        MY SKINS
-      </button>
+      <div class="app-body">
+      <nav class="side-nav" id="topMenu" aria-label="Game menu">
+        <p class="nav-caption">A little world of cats</p>
 
-      <button type="button" id="boxBtn" class="btn">OPEN BOX</button>
+        <div class="nav-item active" aria-current="page">
+          <span class="nav-icon" data-icon="home"></span>My cozy corner
+        </div>
 
-      <button type="button" id="openShopBtn" class="btn">SHOP</button>
-      <button
-        type="button"
-        id="openAchievementsBtn"
-        class="btn open-achievements-btn"
-      >
-        OPEN ACHIEVEMENTS LIST
-      </button>
+        <button type="button" id="openSkinsBtn" class="nav-item">
+          <span class="nav-icon" data-icon="skins"></span>My Skins
+        </button>
 
-      <button type="button" id="openDailyBtn" class="btn open-daily-btn">
-        OPEN DAILY LIST
-      </button>
+        <button type="button" id="boxBtn" class="nav-item">
+          <span class="nav-icon" data-icon="box"></span>Open Box
+        </button>
 
-      <button
-        type="button"
-        id="openInstructionsBtn"
-        class="btn instructions-button"
-        aria-label="Game instructions"
-        title="Game instructions"
-      >
-        ?
-      </button>
-    </nav>
+        <button type="button" id="openShopBtn" class="nav-item">
+          <span class="nav-icon" data-icon="shop"></span>Shop
+        </button>
+
+        <button type="button" id="openAchievementsBtn" class="nav-item">
+          <span class="nav-icon" data-icon="achievements"></span>Achievements
+        </button>
+
+        <button type="button" id="openDailyBtn" class="nav-item">
+          <span class="nav-icon" data-icon="daily"></span>Daily Rewards
+        </button>
+
+        <button type="button" id="openInstructionsBtn" class="nav-item">
+          <span class="nav-icon" data-icon="instructions"></span>Instructions
+        </button>
+      </nav>
+
 
     <section class="game">
       <div class="main">
@@ -209,7 +213,8 @@
           </div>
         </div>
       </div>
-    </section>
+        </section>
+    </div>
 
     <div id="skinsModal" class="skins-modal" aria-hidden="true">
       <div

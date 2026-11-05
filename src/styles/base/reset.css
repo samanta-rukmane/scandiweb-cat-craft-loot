@@ -4,17 +4,13 @@
 
 body {
   display: flex;
-  place-items: center;
+  flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  padding: 20px 28px 40px;
-  background-color: #222;
-  color: white;
-  font-family: Arial, sans-serif;
+  background-color: var(--cream);
+  color: var(--cocoa);
+  font-family: var(--font-ui);
   user-select: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
 }
 
 button {
