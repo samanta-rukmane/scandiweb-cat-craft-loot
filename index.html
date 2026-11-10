@@ -94,11 +94,28 @@
 
         <button type="button" id="openDailyBtn" class="nav-item">
           <span class="nav-icon" data-icon="daily"></span>Daily Rewards
+          <span class="nav-dot" id="dailyDot" hidden></span>
         </button>
 
         <button type="button" id="openInstructionsBtn" class="nav-item">
           <span class="nav-icon" data-icon="instructions"></span>Instructions
         </button>
+
+
+        <div class="player-progress">
+          <div class="collection-card">
+            <div class="collection-head">
+              <strong>Cat collector</strong>
+              <span id="collectorCount">0 / 0</span>
+            </div>
+            <div class="collection-track">
+              <div class="collection-fill" id="collectorFill"></div>
+            </div>
+            <p>One cozy collection, growing.</p>
+          </div>
+          <p class="app-version">CAT CRAFT &amp; LOOT · v1.0</p>
+        </div>
+
       </nav>
 
 
@@ -120,6 +137,12 @@
             <div class="sprite" id="clickBtn"></div>
             <img class="hidden-secret-cat" data-cat-id="secret_5" alt="Secret Cat" />
           </div>
+
+          <div class="scene-badge" id="equippedBadge">
+            <span class="status-dot"></span>
+            <span id="equippedSkinLabel">Simple · EQUIPPED</span>
+          </div>
+
           <p class="scene-prompt">Click your cat to collect treats</p>
         </div>
 
@@ -166,6 +189,11 @@
               <strong id="lifetimeClicks">0</strong>
             </div>
 
+            <div class="stat-row">
+              <span>Skins collected</span>
+              <strong id="skinsCollected">0 / 0</strong>
+            </div>
+
             <button type="button" id="exploreCollectionBtn" class="btn-secondary">
               Explore my collection
             </button>
@@ -203,6 +231,21 @@
 
       <img class="hidden-secret-cat" data-cat-id="secret_6" alt="Secret Cat" />
 
+      <div class="daily-banner" id="dailyBanner" hidden>
+        <div class="daily-banner-text">
+          <img src="./icons/daily.svg" alt="" />
+          <span>A little something is waiting. Your Day <span id="dailyBannerDay">1</span> reward is ready!</span>
+        </div>
+
+        <button type="button" id="dailyBannerBtn" class="link-btn">
+          Collect daily reward
+          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+            <path d="M1.5 6h9M6.5 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" />
+          </svg>
+        </button>
+        
+      </div>
+      
       <!-- hidden in the new design, kept so the old JS does not break -->
       <div class="generator-collections">
         <div class="generator-display">

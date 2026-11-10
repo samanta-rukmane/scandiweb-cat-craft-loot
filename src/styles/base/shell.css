@@ -191,6 +191,77 @@
   background-image: url("/icons/instructions.svg");
 }
 
+
+.nav-dot {
+  flex: 0 0 6px;
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  border-radius: 2px;
+  background: var(--raspberry);
+}
+
+.nav-dot[hidden] {
+  display: none;
+}
+
+/* sidebar bottom: collection progress */
+.player-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.collection-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 16px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+}
+
+.collection-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.collection-head span {
+  font-family: var(--font-display);
+  color: var(--raspberry);
+}
+
+.collection-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--track);
+}
+
+.collection-fill {
+  width: 0;
+  height: 100%;
+  background: var(--plum);
+}
+
+.collection-card p {
+  margin: 0;
+  font-size: 10px;
+  color: var(--cocoa-muted);
+}
+
+.app-version {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 9px;
+  color: var(--cocoa-muted);
+}
+
+
 /* ---------- mobile ---------- */
 @media (max-width: 750px) {
   :root {

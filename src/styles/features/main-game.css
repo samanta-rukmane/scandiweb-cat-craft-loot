@@ -436,3 +436,102 @@
     filter: brightness(1.3) saturate(1.3);
   }
 }
+
+
+/* equipped skin badge on the scene */
+.scene-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--cocoa);
+  font-size: 10px;
+  pointer-events: none;
+}
+
+.scene-badge {
+  --rarity-color: var(--green); /* common */
+}
+
+.scene-badge[data-rarity="rare"] {
+  --rarity-color: var(--raspberry);
+}
+
+.scene-badge[data-rarity="epic"] {
+  --rarity-color: var(--plum);
+}
+
+.scene-badge[data-rarity="legendary"] {
+  --rarity-color: #d9a23b;
+}
+
+.scene-badge[data-rarity="secret"] {
+  --rarity-color: var(--cocoa);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--rarity-color);
+}
+
+/* daily reminder */
+.daily-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--petal-soft);
+  font-size: 12px;
+  color: var(--cocoa);
+}
+
+.daily-banner[hidden] {
+  display: none;
+}
+
+.daily-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.daily-banner-text img {
+  width: 22px;
+  height: 22px;
+  image-rendering: pixelated;
+}
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--raspberry);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 750px) {
+  .daily-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

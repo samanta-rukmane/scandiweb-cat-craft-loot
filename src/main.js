@@ -86,11 +86,19 @@ initGoldenCoinEvent();
 notifyAchievements();
 initMobileMenu();
 
+
 document
   .getElementById("exploreCollectionBtn")
   ?.addEventListener("click", () =>
     document.getElementById("openSkinsBtn").click(),
   );
+
+document
+  .getElementById("dailyBannerBtn")
+  ?.addEventListener("click", () =>
+    document.getElementById("openDailyBtn").click(),
+  );
+
 
 initDailyList();
 initDailyModal(() => {

@@ -4,6 +4,7 @@ import { getClickCost, getClickPower, getCps } from "../core/economy.js";
 import { renderGenerators } from "../ui/generators.js";
 import { LOOTBOX, ENERGY } from "../config/balance.js";
 import { renderRageBar } from "./rageBar.js";
+import { renderMainStatus } from "./mainStatus.js";
 
 export function render() {
   document.getElementById("hudTreats").textContent = Math.floor(
@@ -49,6 +50,7 @@ export function render() {
       maximumFractionDigits: 2,
     });
   }
+  renderMainStatus();
   renderRageBar();
   renderGenerators();
 }
