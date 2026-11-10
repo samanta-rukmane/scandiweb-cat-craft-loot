@@ -24,6 +24,7 @@
 @import "./features/events.css";
 @import "./features/goldencoin.css";
 @import "./features/ufoEvent.css";
+@import "./features/main-game.css";
 
 /* 4. always last */
 @import "./features/secret-cats.css";

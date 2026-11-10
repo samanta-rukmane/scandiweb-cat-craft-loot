@@ -34,14 +34,28 @@ export function updateEnergy() {
 }
 
 // - ADD -
+export function renderEnergyHud() {
+  const text = `${state.energy} / ${ENERGY.max}`;
+
+  const hud = document.getElementById("hudEnergy");
+  if (hud) hud.textContent = text;
+
+  const panelText = document.getElementById("panelEnergyText");
+  if (panelText) panelText.textContent = text;
+
+  const fill = document.getElementById("panelEnergyFill");
+  if (fill) {
+    const percent = Math.max(0, Math.min(100, (state.energy / ENERGY.max) * 100));
+    fill.style.width = `${percent}%`;
+  }
+}
+
+
 function renderEnergyBar() {
   const bar = document.querySelector(".energy-bar");
   const counter = document.querySelector(".energy-count");
 
-  const hudEnergy = document.getElementById("hudEnergy");
-  if (hudEnergy) {
-    hudEnergy.textContent = `${state.energy} / ${ENERGY.max}`;
-  }
+    renderEnergyHud();
 
   if (!bar) return;
   // - - -

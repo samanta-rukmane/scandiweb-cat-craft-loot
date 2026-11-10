@@ -102,123 +102,112 @@
       </nav>
 
 
-    <section class="game">
-      <div class="main">
-        <div class="left">
-          <div class="generator-collections">
-            <div class="generator-display">
-              <div class="generator-display-title">Ball Collection</div>
+      <section class="game">
+      <div class="page-heading">
+        <div>
+          <h1>Welcome to your cozy corner.</h1>
+          <p>Make treats, grow your little world, and find your next favorite cat.</p>
+        </div>
+        <div class="badge badge-sage">
+          <img src="./icons/treats.svg" alt="" />
+          <span><span id="totalCps">0</span> TREATS / SEC</span>
+        </div>
+      </div>
 
-              <div class="generator-display-window" id="ballGeneratorWindow">
-                <div class="generator-balls" id="generatorBalls"></div>
+      <div class="play-row">
+        <div class="scene">
+          <div class="cat-container">
+            <div class="sprite" id="clickBtn"></div>
+            <img class="hidden-secret-cat" data-cat-id="secret_5" alt="Secret Cat" />
+          </div>
+          <p class="scene-prompt">Click your cat to collect treats</p>
+        </div>
+
+        <aside class="status-col">
+          <div class="ui-card engine">
+            <h2 class="ui-card-title">A happy little engine</h2>
+            <div>
+              <div class="meter-head">
+                <span class="meter-name"><img src="./icons/energy.svg" alt="" />Energy</span>
+                <span class="meter-value" id="panelEnergyText">0 / 0</span>
               </div>
+              <div class="meter-track"><div class="meter-fill" id="panelEnergyFill"></div></div>
             </div>
+            <p class="ui-note">Tiny paws. Big feelings. Rage fills as you click.</p>
+          </div>
 
-            <div class="generator-display">
-              <div class="generator-display-title">Bowl Collection</div>
-
-              <div class="bowl-generator-window" id="bowlGeneratorWindow">
-                <div class="generator-bowls" id="generatorBowls"></div>
-              </div>
+          <div class="ui-card stats-card">
+            <div class="stat-row">
+              <span>Each click earns</span>
+              <span class="price"><img src="./icons/treats.svg" alt="" /><span class="click-power">1</span></span>
             </div>
-
-            <div class="generator-display">
-              <div class="generator-display-title">Bed Collection</div>
-
-              <div class="bed-generator-window" id="bedGeneratorWindow">
-                <div class="generator-beds" id="generatorBeds"></div>
-              </div>
+            <div class="stat-divider"></div>
+            <div class="stat-row">
+              <span>Lifetime clicks</span>
+              <strong id="lifetimeClicks">0</strong>
             </div>
           </div>
-          <div class="game-area">
-            <h3>
-              Treats:
-              <span class="treats-count">0</span>
-            </h3>
+        </aside>
+      </div>
 
-            <div class="cat-container">
-              <div class="sprite" id="clickBtn"></div>
-              <img
-                class="hidden-secret-cat"
-                data-cat-id="secret_5"
-                alt="Secret Cat"
-              />
-            </div>
-            <div class="rage-ad-column">
-              <div class="rage-display">
-                <div
-                  class="rage-bar"
-                  role="progressbar"
-                  aria-label="Energy"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  aria-valuenow="10"
-                ></div>
+      <!-- TEMP: old rage bar, will be replaced in the next step -->
+      <div class="rage-ad-column">
+        <div class="rage-display">
+          <div class="rage-bar" role="progressbar" aria-label="Rage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10"></div>
+        </div>
+        <span class="rage-count">0 / 100</span>
+      </div>
+
+      <div class="cards-heading">
+        <h2>A little help from your favorites</h2>
+        <span>Generators make treats automatically.</span>
+      </div>
+
+      <div class="cards-row">
+        <div class="ui-card gen-card">
+          <div class="gen-card-details">
+            <div class="gen-preview"><img src="./skins/clicker-white.png" alt="" /></div>
+            <div class="gen-info">
+              <div class="gen-name-row">
+                <span class="gen-name">Clicker</span>
+                <span class="gen-level">LV. <span class="click-level">0</span></span>
               </div>
-
-              <span class="rage-count">0 / 100</span>
+              <p class="gen-rate">+<span class="click-power">1</span> treats / click</p>
             </div>
-            <p>
-              Treats per click:
-              <span class="click-power">1</span>
-            </p>
-
-            <p>
-              Treats per second:
-              <span id="totalCps">0</span>
-            </p>
+          </div>
+          <div class="gen-action">
+            <div class="price"><img src="./icons/treats.svg" alt="" /><span class="clicker-cost">10</span></div>
+            <button type="button" id="buyClickBtn" class="btn-primary">Upgrade</button>
           </div>
         </div>
 
-        <div class="right">
-          <div class="upgrade" id="buyClickBtn" role="button" tabindex="0">
-            <div class="left-section">
-              <img
-                src="./skins/clicker-white.png"
-                alt="Clicker"
-                class="clicker-img"
-              />
-            </div>
+        <div id="generatorList"></div>
+      </div>
 
-            <div class="mid-section">
-              <h4>
-                Clicker
+      <img class="hidden-secret-cat" data-cat-id="secret_6" alt="Secret Cat" />
 
-                <div class="cost-info">
-                  <p>
-                    Cost:
-                    <span class="clicker-cost">10</span>
-                  </p>
-
-                  <img src="./skins/food.png" alt="Treats" class="food-img" />
-                </div>
-              </h4>
-            </div>
-
-            <div class="right-section">
-              Level
-              <span class="click-level">0</span>
-            </div>
-
-            <div class="next-level-info">
-              <p>+<span class="click-power">1</span> food per click</p>
-            </div>
+      <!-- hidden in the new design, kept so the old JS does not break -->
+      <div class="generator-collections">
+        <div class="generator-display">
+          <div class="generator-display-title">Ball Collection</div>
+          <div class="generator-display-window" id="ballGeneratorWindow">
+            <div class="generator-balls" id="generatorBalls"></div>
           </div>
-
-          <div class="generator-section">
-            <h3>Cat generators</h3>
-
-            <div id="generatorList"></div>
-            <img
-              class="hidden-secret-cat"
-              data-cat-id="secret_6"
-              alt="Secret Cat"
-            />
+        </div>
+        <div class="generator-display">
+          <div class="generator-display-title">Bowl Collection</div>
+          <div class="bowl-generator-window" id="bowlGeneratorWindow">
+            <div class="generator-bowls" id="generatorBowls"></div>
+          </div>
+        </div>
+        <div class="generator-display">
+          <div class="generator-display-title">Bed Collection</div>
+          <div class="bed-generator-window" id="bedGeneratorWindow">
+            <div class="generator-beds" id="generatorBeds"></div>
           </div>
         </div>
       </div>
-        </section>
-    </div>
+    </section>
 
     <div id="skinsModal" class="skins-modal" aria-hidden="true">
       <div

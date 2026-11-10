@@ -21,6 +21,13 @@ const generatorSounds = {
   bed: new Audio(assetUrl("/sounds/sleep.mp3")),
 };
 
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+
 export function initGenerators(onChange) {
   if (!list) {
     console.error("Generator list not found!");
@@ -30,58 +37,40 @@ export function initGenerators(onChange) {
   list.innerHTML = "";
 
   for (const [id, generator] of Object.entries(GENERATORS)) {
-    const row = document.createElement("div");
-    row.classList.add("generator-row");
-
-    const button = document.createElement("button");
-    button.type = "button";
-    button.dataset.id = id;
-    button.classList.add("generator-button");
+    const card = el("div", "ui-card gen-card");
 
     const image = document.createElement("img");
     image.src = assetUrl(generator.image);
     image.alt = generator.name;
-    image.classList.add("generator-img");
+    const preview = el("div", "gen-preview");
+    preview.appendChild(image);
 
-    const info = document.createElement("div");
-    info.classList.add("generator-info");
+    const nameRow = el("div", "gen-name-row");
+    nameRow.append(
+      el("span", "gen-name", generator.name),
+      el("span", "gen-level"),
+    );
 
-    const name = document.createElement("span");
-    name.classList.add("generator-name");
+    const info = el("div", "gen-info");
+    info.append(nameRow, el("p", "gen-rate"));
 
-    const costInfo = document.createElement("div");
-    costInfo.classList.add("cost-info");
+    const details = el("div", "gen-card-details");
+    details.append(preview, info);
 
-    const costText = document.createElement("p");
-    costText.textContent = "Cost:";
+    const coin = document.createElement("img");
+    coin.src = assetUrl("/icons/treats.svg");
+    coin.alt = "";
+    const price = el("div", "price");
+    price.append(coin, el("span", "gen-cost"));
 
-    const costValue = document.createElement("span");
-    costValue.classList.add("generator-cost");
+    const button = el("button", "btn-primary gen-upgrade", "Upgrade");
+    button.type = "button";
+    button.dataset.id = id;
 
-    const foodImage = document.createElement("img");
-    foodImage.src = assetUrl("/skins/food.png");
-    foodImage.alt = "Treats";
-    foodImage.classList.add("food-img");
+    const action = el("div", "gen-action");
+    action.append(price, button);
 
-    costInfo.appendChild(costText);
-    costInfo.appendChild(costValue);
-    costInfo.appendChild(foodImage);
-
-    info.appendChild(name);
-    info.appendChild(costInfo);
-
-    const level = document.createElement("span");
-    level.classList.add("generator-level");
-
-    button.appendChild(image);
-    button.appendChild(info);
-    button.appendChild(level);
-
-    const tooltip = document.createElement("div");
-    tooltip.classList.add("next-level-info");
-
-    const tooltipText = document.createElement("p");
-    tooltip.appendChild(tooltipText);
+    card.append(details, action);
 
     button.addEventListener("click", () => {
       const purchased = buyGenerator(id);
@@ -117,10 +106,7 @@ export function initGenerators(onChange) {
       renderGenerators();
     });
 
-    row.appendChild(button);
-    row.appendChild(tooltip);
-
-    list.appendChild(row);
+    list.appendChild(card);
   }
 
   renderGenerators();
@@ -131,33 +117,27 @@ export function renderGenerators() {
     return;
   }
 
-  for (const row of list.children) {
-    const button = row.querySelector(".generator-button");
+  for (const card of list.children) {
+    const button = card.querySelector(".gen-upgrade");
 
     if (!button) {
       continue;
     }
 
     const id = button.dataset.id;
-    const generator = GENERATORS[id];
 
-    if (!generator) {
+    if (!GENERATORS[id]) {
       continue;
     }
 
     const level = Number(state.generators?.[id]) || 0;
     const cost = getGeneratorCost(id);
 
-    row.querySelector(".generator-name").textContent = generator.name;
-    row.querySelector(".generator-cost").textContent = cost.toLocaleString();
-    row.querySelector(".generator-level").textContent = `Owned: ${level}`;
+    card.querySelector(".gen-level").textContent = `LV. ${level}`;
+    card.querySelector(".gen-cost").textContent = cost.toLocaleString();
+    card.querySelector(".gen-rate").textContent =
+      `+${getGeneratorCps(id).toLocaleString(undefined, { maximumFractionDigits: 2 })} treats / sec`;
 
     button.disabled = state.treats < cost;
-
-    const tooltipText = row.querySelector(".next-level-info p");
-
-    if (tooltipText) {
-      tooltipText.textContent = `Produces ${getGeneratorCps(id)} treats per second.`;
-    }
   }
 }

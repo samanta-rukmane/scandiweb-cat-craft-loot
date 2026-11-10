@@ -22,3 +22,38 @@
   font-size: 26px;
   line-height: 1;
 }
+
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1.5px solid var(--raspberry-dark);
+  border-radius: var(--radius-sm);
+  background: var(--raspberry);
+  box-shadow: var(--shadow-btn);
+  color: var(--surface);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgb(114 86 78 / 25%);
+}
+
+.btn-primary:disabled {
+  border-color: var(--border-soft);
+  background: var(--track);
+  color: var(--cocoa-muted);
+  cursor: not-allowed;
+}

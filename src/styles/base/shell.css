@@ -191,17 +191,6 @@
   background-image: url("/icons/instructions.svg");
 }
 
-/* TEMP: old dark look inside the new shell. Remove at the "Main game" step. */
-.app-body > .game {
-  flex: 1;
-  min-width: 0;
-  margin: var(--space-4);
-  padding: var(--space-3);
-  border-radius: var(--radius-md);
-  background: #222;
-  color: white;
-}
-
 /* ---------- mobile ---------- */
 @media (max-width: 750px) {
   :root {
@@ -255,10 +244,5 @@
   .side-nav.open {
     visibility: visible;
     transform: none;
-  }
-
-  .app-body > .game {
-    margin: var(--space-2);
-    padding: var(--space-2);
   }
 }
