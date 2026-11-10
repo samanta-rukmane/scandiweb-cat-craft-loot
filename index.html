@@ -133,6 +133,25 @@
               </div>
               <div class="meter-track"><div class="meter-fill" id="panelEnergyFill"></div></div>
             </div>
+
+            <div>
+              <div class="meter-head">
+                <span class="meter-name"><img src="./icons/rage.svg" alt="" />Rage</span>
+                <span class="meter-value" id="panelRageText">0 / 100</span>
+              </div>
+              <div class="meter-track">
+                <div
+                  class="meter-fill meter-fill-rage"
+                  id="panelRageFill"
+                  role="progressbar"
+                  aria-label="Rage"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="0"
+                ></div>
+              </div>
+            </div>
+
             <p class="ui-note">Tiny paws. Big feelings. Rage fills as you click.</p>
           </div>
 
@@ -146,17 +165,15 @@
               <span>Lifetime clicks</span>
               <strong id="lifetimeClicks">0</strong>
             </div>
+
+            <button type="button" id="exploreCollectionBtn" class="btn-secondary">
+              Explore my collection
+            </button>
+
           </div>
         </aside>
       </div>
 
-      <!-- TEMP: old rage bar, will be replaced in the next step -->
-      <div class="rage-ad-column">
-        <div class="rage-display">
-          <div class="rage-bar" role="progressbar" aria-label="Rage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10"></div>
-        </div>
-        <span class="rage-count">0 / 100</span>
-      </div>
 
       <div class="cards-heading">
         <h2>A little help from your favorites</h2>

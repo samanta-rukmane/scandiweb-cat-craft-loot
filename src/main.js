@@ -85,6 +85,13 @@ initBubbleEvents(() => {
 initGoldenCoinEvent();
 notifyAchievements();
 initMobileMenu();
+
+document
+  .getElementById("exploreCollectionBtn")
+  ?.addEventListener("click", () =>
+    document.getElementById("openSkinsBtn").click(),
+  );
+
 initDailyList();
 initDailyModal(() => {
   render();

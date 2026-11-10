@@ -2,7 +2,7 @@ import { renderEnergyHud } from "../loot/energy.js";
 import { state } from "../core/state.js";
 import { getClickCost, getClickPower, getCps } from "../core/economy.js";
 import { renderGenerators } from "../ui/generators.js";
-import { LOOTBOX } from "../config/balance.js";
+import { LOOTBOX, ENERGY } from "../config/balance.js";
 import { renderRageBar } from "./rageBar.js";
 
 export function render() {
