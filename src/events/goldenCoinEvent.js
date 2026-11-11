@@ -1,6 +1,7 @@
 import { state } from "../core/state.js";
 import { assetUrl } from "../config/paths.js";
 import { getSkinBonuses } from "../core/skinBonuses.js";
+import { getSkillBonus } from "../core/skillTree.js";
 
 const GOLDEN_CAT = assetUrl("/skins/cats/secret/goldenCat.png");
 const GOLD_COIN = assetUrl("/skins/coins/catCoin.png");
@@ -50,8 +51,11 @@ function scheduleNextCoin() {
 
     const bonuses = getSkinBonuses();
 
-    const spawnChance =
-      BASE_GOLDEN_CAT_SPAWN_CHANCE + (bonuses.goldenCatSpawnChanceBonus ?? 0);
+    const skinBonus = bonuses.goldenCatSpawnChanceBonus ?? 0;
+
+    const skillBonus = getSkillBonus("goldenCatSpeed");
+
+    const spawnChance = BASE_GOLDEN_CAT_SPAWN_CHANCE + skinBonus + skillBonus;
 
     if (!activeCoin && Math.random() < spawnChance) {
       spawnGoldCoin();

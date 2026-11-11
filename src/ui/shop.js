@@ -24,6 +24,14 @@ export function initShop(onChange) {
     return;
   }
 
+  if (shopDialog) {
+    shopDialog.addEventListener("click", (event) => {
+      if (event.target === shopDialog) {
+        shopDialog.close();
+      }
+    });
+  }
+
   if (!Array.isArray(state.ownedBackgrounds)) {
     state.ownedBackgrounds = ["cozy_room"];
   }

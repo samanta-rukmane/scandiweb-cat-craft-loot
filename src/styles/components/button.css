@@ -6,7 +6,6 @@
   background: var(--accent);
   color: white;
   font-weight: bold;
-  cursor: pointer;
 }
 .btn:hover {
   background: var(--accent-dark);

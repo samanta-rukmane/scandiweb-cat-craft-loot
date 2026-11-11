@@ -1,4 +1,4 @@
-export function showClickEffect(event, amount) {
+export function showClickEffect(event, amount, isCrit) {
   const container = document.querySelector(".cat-container");
 
   if (!container) {
@@ -10,8 +10,13 @@ export function showClickEffect(event, amount) {
 
   effect.classList.add("floating-treat");
 
-  effect.textContent =
-    typeof amount === "number" ? `${amount >= 0 ? "+" : ""}${amount}` : amount;
+  const formattedAmount =
+    typeof amount === "number"
+      ? `${amount >= 0 ? "+" : ""}${amount.toFixed(2)}`
+      : amount;
+
+  effect.textContent = isCrit ? `CRIT! ${formattedAmount}` : formattedAmount;
+  effect.classList.toggle("crit", isCrit);
 
   effect.style.left = `${event.clientX - rect.left}px`;
   effect.style.top = `${event.clientY - rect.top}px`;

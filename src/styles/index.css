@@ -24,7 +24,10 @@
 @import "./features/events.css";
 @import "./features/goldencoin.css";
 @import "./features/ufoEvent.css";
-@import "./features/main-game.css";
 
+@import "./features/main-game.css";
+@import "./features/cursor.css";
+
+@import "./features/skill-tree.css";
 /* 4. always last */
 @import "./features/secret-cats.css";

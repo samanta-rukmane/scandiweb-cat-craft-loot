@@ -1,8 +1,8 @@
-import { renderEnergyHud } from "../loot/energy.js";
+import { renderEnergyBar } from "../loot/energy.js";
 import { state } from "../core/state.js";
 import { getClickCost, getClickPower, getCps } from "../core/economy.js";
 import { renderGenerators } from "../ui/generators.js";
-import { LOOTBOX, ENERGY } from "../config/balance.js";
+import { LOOTBOX } from "../config/balance.js";
 import { renderRageBar } from "./rageBar.js";
 import { renderMainStatus } from "./mainStatus.js";
 
@@ -14,7 +14,7 @@ export function render() {
   document.getElementById("hudDust").textContent =
     state.dust.toLocaleString("en-US");
 
-  renderEnergyHud();
+  renderEnergyBar();
 
   document.getElementById("lifetimeClicks").textContent = (
     state.stats?.totalClicks ?? 0
@@ -24,15 +24,12 @@ export function render() {
 
   document.querySelector(".click-level").textContent = state.clickLevel;
 
-  document.querySelectorAll(".click-power").forEach((element) => {
-    element.textContent = getClickPower();
+  document.querySelectorAll(".click-power").forEach((el) => {
+    el.textContent = Number(getClickPower().toFixed(2));
   });
 
   document.getElementById("buyClickBtn").disabled =
     state.treats < getClickCost();
-
-  document.querySelector(".energy-count").textContent =
-    `${state.energy}/${ENERGY.max}`;
 
   document.querySelector(".dust-count").textContent = state.dust;
 

@@ -52,10 +52,12 @@ export function spinReel() {
   const cardWidth = card.offsetWidth;
   const gap = 8;
   const winningIndex = 35;
+
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  let positionRandom = getRandomInt(-55, 55);
+
+  const positionRandom = getRandomInt(-45, 45);
 
   const targetPosition =
     winningIndex * (cardWidth + gap) +
@@ -68,7 +70,19 @@ export function spinReel() {
 
   ribbon.offsetWidth;
 
+  window.setGameCursor?.("loading");
+
   ribbon.style.transition = "transform 5s cubic-bezier(0.1, 0.7, 0.1, 1)";
 
   ribbon.style.transform = `translateX(-${targetPosition}px)`;
+
+  ribbon.addEventListener(
+    "transitionend",
+    (event) => {
+      if (event.propertyName !== "transform") return;
+
+      window.setGameCursor?.("normal");
+    },
+    { once: true },
+  );
 }

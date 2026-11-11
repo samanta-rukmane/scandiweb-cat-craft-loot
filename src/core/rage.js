@@ -1,5 +1,6 @@
 import { state } from "../core/state.js";
 import { RAGE } from "../config/balance.js";
+import { getSkillMultiplier } from "./skillTree.js";
 let lastRage = Date.now();
 
 export function isRageActive() {
@@ -36,6 +37,9 @@ export function updateRage() {
   state.rage = Math.max(0, state.rage - perSecond * dt);
   if (state.ragePhase === "active" && state.rage === 0) {
     state.ragePhase = "cooldown";
-    state.rageCooldownUntil = now + RAGE.cooldownSeconds * 1000;
+    const cooldownMultiplier = getSkillMultiplier("rageCooldown");
+    console.log(cooldownMultiplier);
+    state.rageCooldownUntil =
+      now + RAGE.cooldownSeconds * 1000 * cooldownMultiplier;
   }
 }

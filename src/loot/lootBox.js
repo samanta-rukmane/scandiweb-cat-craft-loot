@@ -7,6 +7,7 @@ import {
   LOOTBOX,
 } from "../config/balance.js";
 import { updateEnergy } from "./energy.js";
+import { getSkillBonus } from "../core/skillTree.js";
 
 export function pickRarity() {
   const total = Object.values(LOOT_WEIGHTS).reduce((a, b) => a + b, 0);
@@ -20,7 +21,7 @@ export function pickRarity() {
 export function rollSkin() {
   const rarity = pickRarity();
   const pool = Object.keys(SKINS).filter(
-    (id) => id !== "default" && SKINS[id].rarity in LOOT_WEIGHTS,
+    (id) => id !== "default" && SKINS[id].rarity === rarity,
   );
   const ids = pool.length
     ? pool
@@ -35,7 +36,7 @@ export function openBox() {
   updateEnergy();
   if (state.energy < LOOTBOX.energyCost) return { ok: false };
 
-  state.energy -= LOOTBOX.energyCost;
+  state.energy -= LOOTBOX.energyCost + getSkillBonus("chestEnergyCost");
   const id = rollSkin();
   state.pendingReward = id;
   return { ok: true, id };
@@ -51,6 +52,7 @@ export function claimReward() {
     const bonuses = getSkinBonuses();
 
     const baseDust = DUST_FOR_DUPLICATE[rarity] ?? 0;
+
     const multiplier = bonuses.duplicateDustMultiplier ?? 1;
 
     dust = Math.ceil(baseDust * multiplier);

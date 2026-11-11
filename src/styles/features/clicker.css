@@ -29,7 +29,6 @@
 }
 
 .sprite:hover {
-  cursor: pointer;
   opacity: 0.9;
 }
 
@@ -170,6 +169,13 @@
   user-select: none;
   white-space: nowrap;
   animation: floatingTreat 1.2s ease-out forwards;
+}
+.floating-treat.crit {
+  color: #ffb347;
+  font-size: 30px;
+  text-shadow:
+    1px 1px 2px #000,
+    0 0 10px rgb(255 140 0 / 70%);
 }
 
 @keyframes floatingTreat {

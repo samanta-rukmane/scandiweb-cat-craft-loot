@@ -14,6 +14,8 @@ export function initClick(render) {
 
   if (clickBtn) {
     clickBtn.addEventListener("click", (event) => {
+      window.setGameCursor?.("pointer");
+
       const now = Date.now();
 
       if (now - lastMeowTime >= 300) {
@@ -25,10 +27,8 @@ export function initClick(render) {
         });
       }
 
-      const earnedTreats = clickCat();
-
-      showClickEffect(event, earnedTreats);
-
+      const { amount, isCrit } = clickCat();
+      showClickEffect(event, amount, isCrit);
       notifyAchievements();
       render();
     });

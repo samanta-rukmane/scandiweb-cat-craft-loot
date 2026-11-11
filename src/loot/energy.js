@@ -1,5 +1,6 @@
 import { state } from "../core/state.js";
 import { ENERGY } from "../config/balance.js";
+import { getSkillBonus } from "../core/skillTree.js";
 
 const ENERGY_STATES = [
   { min: 0.8, x: 0, y: 0 }, // 100%
@@ -9,22 +10,29 @@ const ENERGY_STATES = [
   { min: 0, x: 195, y: 51 }, // 0%
 ];
 
+export function getMaxEnergy() {
+  const baseMax = ENERGY.max ?? 10;
+  const bonusMax = getSkillBonus("maxEnergy");
+  return baseMax + bonusMax;
+}
+
 export function updateEnergy() {
   const now = Date.now();
   const stepMs = ENERGY.regenSeconds * 10;
+  const currentMax = getMaxEnergy();
 
   if (!state.energyUpdatedAt) {
     state.energyUpdatedAt = now;
   }
 
-  if (state.energy >= ENERGY.max) {
-    state.energy = ENERGY.max;
+  if (state.energy >= currentMax) {
+    state.energy = currentMax;
     state.energyUpdatedAt = now;
   } else {
     const gained = Math.floor((now - state.energyUpdatedAt) / stepMs);
 
     if (gained > 0) {
-      state.energy = Math.min(ENERGY.max, state.energy + gained);
+      state.energy = Math.min(currentMax, state.energy + gained);
 
       state.energyUpdatedAt += gained * stepMs;
     }
@@ -33,9 +41,9 @@ export function updateEnergy() {
   renderEnergyBar();
 }
 
-// - ADD -
 export function renderEnergyHud() {
-  const text = `${state.energy} / ${ENERGY.max}`;
+  const currentMax = getMaxEnergy();
+  const text = `${state.energy} / ${currentMax}`;
 
   const hud = document.getElementById("hudEnergy");
   if (hud) hud.textContent = text;
@@ -45,40 +53,42 @@ export function renderEnergyHud() {
 
   const fill = document.getElementById("panelEnergyFill");
   if (fill) {
-    const percent = Math.max(0, Math.min(100, (state.energy / ENERGY.max) * 100));
+    const percent =
+      currentMax > 0
+        ? Math.max(0, Math.min(100, (state.energy / currentMax) * 100))
+        : 0;
     fill.style.width = `${percent}%`;
   }
 }
 
-
-function renderEnergyBar() {
+export function renderEnergyBar() {
   const bar = document.querySelector(".energy-bar");
   const counter = document.querySelector(".energy-count");
 
-    renderEnergyHud();
+  renderEnergyHud();
 
   if (!bar) return;
-  // - - -
 
-  const maxEnergy = ENERGY.max;
-  const currentEnergy = Math.max(0, Math.min(state.energy, maxEnergy));
+  const currentMax = getMaxEnergy();
+  const currentEnergy = Math.max(0, Math.min(state.energy, currentMax));
 
-  const ratio = maxEnergy > 0 ? currentEnergy / maxEnergy : 0;
+  const ratio = currentMax > 0 ? currentEnergy / currentMax : 0;
 
   const selectedState =
     ENERGY_STATES.find((item) => ratio >= item.min) ?? ENERGY_STATES[4];
 
   bar.style.backgroundPosition = `-${selectedState.x}px -${selectedState.y}px`;
 
-  bar.setAttribute("aria-valuemax", maxEnergy);
+  bar.setAttribute("aria-valuemax", currentMax);
   bar.setAttribute("aria-valuenow", currentEnergy);
 
   if (counter) {
-    counter.textContent = `${currentEnergy} / ${maxEnergy}`;
+    counter.textContent = `${currentEnergy} / ${currentMax}`;
   }
 }
 
 export function addEnergy(amount) {
-  state.energy = Math.min(ENERGY.max, state.energy + amount);
+  const currentMax = getMaxEnergy();
+  state.energy = Math.min(currentMax, state.energy + amount);
   updateEnergy();
 }

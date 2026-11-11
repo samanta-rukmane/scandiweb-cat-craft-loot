@@ -1,0 +1,66 @@
+.skill-tree-dialog {
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 25px;
+}
+
+#skillTree {
+  position: relative;
+  margin: 0 auto;
+}
+
+.skill-tree-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.skill-tree-header h2 {
+  margin: 0;
+  text-align: left;
+}
+
+.skill-tree-card {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 3px solid #333;
+  border-radius: 8px;
+  background: #222;
+  cursor: pointer;
+}
+
+.skill-tree-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.skill-tree-card.locked {
+  filter: grayscale(1) brightness(0.5);
+  cursor: not-allowed;
+}
+.skill-tree-card.available {
+  border-color: #e6a85c;
+  box-shadow: 0 0 8px #e6a85c;
+}
+.skill-tree-card.owned {
+  border-color: #70d6a3;
+}
+
+.skill-tree-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.skill-tree-lines line {
+  stroke: #555;
+  stroke-width: 4;
+}

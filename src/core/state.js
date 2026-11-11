@@ -20,6 +20,7 @@ export const state = {
   rageCooldownUntil: 0,
   stats: { totalClicks: 0, boxesOpened: 0, totalTreats: 0 },
   achievements: [],
+  skillTree: [],
   foundSecretCats: [],
   // - ADD -
   hintLevels: {},

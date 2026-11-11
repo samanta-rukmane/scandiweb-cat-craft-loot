@@ -4,6 +4,7 @@ import { GENERATORS } from "../config/generators.js";
 import { assetUrl } from "../config/paths.js";
 import { showClickEffect } from "../ui/click/clickEffect.js";
 import { getSkinBonuses } from "../core/skinBonuses.js";
+import { getSkillMultiplier } from "../core/skillTree.js";
 
 const BUBBLE_DURATION = 25_000;
 
@@ -290,11 +291,13 @@ function collectReward(event) {
     }
 
     state.generators[event.generator] =
-      (state.generators[event.generator] ?? 0) + 1;
+      (state.generators[event.generator] ?? 0) +
+      1 * getSkillMultiplier("bubbleEffect");
 
+    const amount = Math.floor(1 * getSkillMultiplier("bubbleEffect"));
     const generatorName = GENERATORS[event.generator].name ?? event.generator;
 
-    message = `+1 ${generatorName}`;
+    message = `+${amount} ${generatorName}`;
     getEventHistory()[event.id] = now;
   } else if (event.type) {
     switch (event.type) {
@@ -415,7 +418,7 @@ function collectReward(event) {
     getEventHistory()[event.id] = now;
   } else {
     const reward = event.getReward();
-
+    reward.amount *= getSkillMultiplier("bubbleEffect");
     switch (reward.type) {
       case "treats":
         state.treats += reward.amount;

@@ -25,13 +25,10 @@
 .rage-bar {
   display: block;
   width: 400px;
-  height: 70px;
-
-  background-image: url("/skins/rageBar.png");
+  height: 110px;
+  background-image: url("/skins/rageBar/bar_0.png");
   background-repeat: no-repeat;
-  background-size: 400px 400px;
-  background-position: 0 0;
-
+  background-size: 100% 100%;
   image-rendering: pixelated;
 }
 
