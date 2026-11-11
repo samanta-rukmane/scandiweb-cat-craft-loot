@@ -175,6 +175,9 @@
 .nav-icon[data-icon="skins"] {
   background-image: url("/icons/skins.svg");
 }
+.nav-icon[data-icon="skills"] {
+  background-image: url("/icons/skills.svg");
+}
 .nav-icon[data-icon="box"] {
   background-image: url("/icons/box.svg");
 }
