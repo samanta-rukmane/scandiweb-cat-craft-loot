@@ -1,38 +1,31 @@
 .skins-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+  width: min(600px, calc(100% - 40px));
+  max-width: none;
+  height: 80vh;
+  padding: 0;
+  border: none;
+  background: transparent;
+  overflow: visible;
+}
+
+.skins-modal::backdrop {
   background: rgb(0 0 0 / 60%);
 }
 
-.skins-modal.open {
-  display: flex;
-}
-
 .skins-modal-content {
-  width: 100%;
-  max-width: 600px;
-  height: 80vh;
-  /* - DELETE - */
-  /* overflow-y: auto; */
-  /* - ADD - */
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  /* - - - - */
+  width: 100%;
+  height: 100%;
   padding: 25px;
+  overflow: hidden;
   background: var(--paper);
   border: 3px solid var(--accent);
   border-radius: 16px;
   box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
-  /* - ADD - */
-    color: var(--brown);
-  /* - - - - */
+  color: var(--brown);
 }
+
 
 .skins-modal-header {
   display: flex;
