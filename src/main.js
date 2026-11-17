@@ -5,7 +5,7 @@ import { initGenerators } from "./ui/generators.js";
 import { updateEnergy } from "./loot/energy.js";
 import { claimReward } from "./loot/lootBox.js";
 import { initCatAnimation } from "./ui/catAnimation.js";
-import { initSkinsModal } from "./ui/skins/skinsModal.js";
+import { initSkinsPage } from "./ui/skins/skinsPage.js";
 import { applyOfflineGains } from "./core/offline.js";
 import { initAdModal } from "./ui/adModal.js";
 import { initLootboxModal } from "./ui/lootbox/lootboxModal.js";
@@ -32,6 +32,7 @@ import { initGoldenCoinEvent } from "./events/goldenCoinEvent.js";
 import { initUfoEvent } from "./events/ufoEvent.js";
 import { initCustomCursor } from "./ui/customCursor.js";
 import { initSkillTreeModal } from "./ui/skillTree/skillTreeModal.js";
+import { initViews } from "./ui/views.js";
 
 import "./styles/index.css";
 load();
@@ -60,11 +61,9 @@ initGenerators(() => {
   renderBedGenerator();
 });
 initShop(render);
-// - DELETE -
-// initSkinsModal();
-// - ADD -
-initSkinsModal(render);
-// - - - -
+
+initSkinsPage(render);
+
 initAchievementsList();
 initAchievementsModal();
 initCatAnimation();
@@ -92,6 +91,7 @@ initBubbleEvents(() => {
 initGoldenCoinEvent();
 notifyAchievements();
 initMobileMenu();
+initViews();
 
 
 document

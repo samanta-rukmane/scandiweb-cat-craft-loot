@@ -5,6 +5,7 @@ import { renderGenerators } from "../ui/generators.js";
 import { LOOTBOX } from "../config/balance.js";
 import { renderRageBar } from "./rageBar.js";
 import { renderMainStatus } from "./mainStatus.js";
+import { refreshSkinsPage } from "./skins/skinsPage.js";
 
 export function render() {
   document.getElementById("hudTreats").textContent = Math.floor(
@@ -50,4 +51,5 @@ export function render() {
   renderMainStatus();
   renderRageBar();
   renderGenerators();
+  refreshSkinsPage();
 }

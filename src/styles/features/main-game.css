@@ -8,6 +8,10 @@
   padding: var(--space-4);
 }
 
+.game[hidden] {
+  display: none;
+}
+
 .game > .generator-collections {
   display: none;
 }

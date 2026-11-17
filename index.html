@@ -75,11 +75,11 @@
       <nav class="side-nav" id="topMenu" aria-label="Game menu">
         <p class="nav-caption">A little world of cats</p>
 
-        <div class="nav-item active" aria-current="page">
+        <button type="button" class="nav-item active" data-nav="home" aria-current="page">
           <span class="nav-icon" data-icon="home"></span>My cozy corner
-        </div>
+        </button>
 
-        <button type="button" id="openSkinsBtn" class="nav-item">
+        <button type="button" id="openSkinsBtn" class="nav-item" data-nav="skins">
           <span class="nav-icon" data-icon="skins"></span>My Skins
         </button>
 
@@ -126,7 +126,7 @@
       </nav>
 
 
-      <section class="game">
+      <section class="game" data-view="home">
       <div class="page-heading">
         <div>
           <h1>Welcome to your cozy corner.</h1>
@@ -272,82 +272,69 @@
           <div class="bed-generator-window" id="bedGeneratorWindow">
             <div class="generator-beds" id="generatorBeds"></div>
           </div>
+              </div>
+    </section>
+
+        <section class="game" data-view="skins" hidden>
+      <div class="page-heading">
+        <div>
+          <h1>Different coats. Same tiny chaos.</h1>
+          <p>Dress your companion in a favorite skin.</p>
         </div>
+        <div class="badge badge-lavender">
+          <span id="skinsBadge">0 / 0 COLLECTED</span>
+        </div>
+      </div>
+
+      <div class="skin-tabs" id="skinTabs">
+        <button type="button" class="skin-tab active" data-rarity="all">
+          All skins · <span data-count="all">0</span>
+        </button>
+        <button type="button" class="skin-tab" data-rarity="common">
+          Common · <span data-count="common">0</span>
+        </button>
+        <button type="button" class="skin-tab" data-rarity="rare">
+          Rare · <span data-count="rare">0</span>
+        </button>
+        <button type="button" class="skin-tab" data-rarity="epic">
+          Epic · <span data-count="epic">0</span>
+        </button>
+        <button type="button" class="skin-tab" data-rarity="legendary">
+          Legendary · <span data-count="legendary">0</span>
+        </button>
+        <button type="button" class="skin-tab" data-rarity="secret">
+          Secret · <span data-count="secret">0</span>
+        </button>
+      </div>
+
+      <p id="secretNote" class="ui-note" hidden>
+        Secret skins can't be crafted. Complete their secret task to unlock
+        them. Dust can buy hints to help you find them.
+      </p>
+
+      <div id="skinsGrid" class="skins-grid"></div>
+
+      <div class="secret-banner">
+        <img
+          class="secret-banner-img"
+          src="./skins/cats/secret/secretCat.png"
+          alt=""
+        />
+        <div class="secret-banner-text">
+          <h2>Some cats keep their own secrets.</h2>
+          <p>
+            Secret Skins · <span id="secretFound">0</span> of
+            <span id="secretTotal">0</span> discovered. Follow the clues to find
+            the others.
+          </p>
+        </div>
+        <button type="button" id="exploreSecretBtn" class="btn-secondary">
+          Explore Secret Skins →
+        </button>
       </div>
     </section>
     </div>
 
-      <dialog id="skinsModal" class="skins-modal" aria-labelledby="skinsModalTitle">
-      <div class="skins-modal-content">
-
-        <div class="skins-modal-header">
-          <h2 id="skinsModalTitle">My Skins</h2>
-
-          <button
-            type="button"
-            id="closeSkinsBtn"
-            class="btn close-btn"
-            aria-label="Close skins"
-          >
-            &times;
-          </button>
-        </div>
-
-
-        <div class="shop-balance">
-          <span>Your dust:</span>
-          <strong id="skinsDustCount">0</strong>
-          <img src="/skins/dust.png" alt="" class="dust-icon" />
-        </div>
-        
-        
-        <div class="skins-progress">
-          <p>Collected: <strong id="skinsTotalCount">0/0</strong></p>
-          <p>
-            <span id="skinsTabName">Common</span>:
-            <strong id="skinsTabCount">0/0</strong>
-          </p>
-        </div>
-
-
-        <div class="skin-rarity-filters">
-          <button
-            type="button"
-            class="btn rarity-button active"
-            data-rarity="common"
-          >
-            Common
-          </button>
-
-          <button type="button" class="btn rarity-button" data-rarity="rare">
-            Rare
-          </button>
-
-          <button type="button" class="btn rarity-button" data-rarity="epic">
-            Epic
-          </button>
-
-          <button
-            type="button"
-            class="btn rarity-button"
-            data-rarity="legendary"
-          >
-            Legendary
-          </button>
-          <button type="button" class="btn rarity-button" data-rarity="secret">
-            Secret
-          </button>
-        </div>
-
-        <p id="secretNote" class="skins-note" hidden>
-          Secret skins can't be bought. Complete their secret task to unlock
-          them. Dust can buy hints to help you find the secret skins.
-        </p>
-
-
-        <div id="ownedSkinsList" class="owned-skins-list"></div>
-      </div>
-    </dialog>
 
 
     <dialog id="craftConfirmDialog" class="modal craft-confirm-dialog">
