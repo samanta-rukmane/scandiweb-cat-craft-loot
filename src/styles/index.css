@@ -14,6 +14,8 @@
 @import "./features/generators.css";
 @import "./features/skins.css";
 @import "./features/skins-page.css";
+@import "./features/skins-page.css";
+@import "./features/box-page.css";
 @import "./features/lootbox.css";
 @import "./features/rage.css";
 @import "./features/shop.css";

@@ -2,10 +2,10 @@ import { renderEnergyBar } from "../loot/energy.js";
 import { state } from "../core/state.js";
 import { getClickCost, getClickPower, getCps } from "../core/economy.js";
 import { renderGenerators } from "../ui/generators.js";
-import { LOOTBOX } from "../config/balance.js";
 import { renderRageBar } from "./rageBar.js";
 import { renderMainStatus } from "./mainStatus.js";
 import { refreshSkinsPage } from "./skins/skinsPage.js";
+import { renderBoxPage } from "./lootbox/boxPage.js";
 
 export function render() {
   document.getElementById("hudTreats").textContent = Math.floor(
@@ -32,10 +32,7 @@ export function render() {
   document.getElementById("buyClickBtn").disabled =
     state.treats < getClickCost();
 
-  document.querySelector(".dust-count").textContent = state.dust;
-
-  document.getElementById("openBoxBtn").disabled =
-    state.energy < LOOTBOX.energyCost;
+    renderBoxPage();
 
   let secondsLeft = Math.ceil((state.adReadyAt - Date.now()) / 1000);
 

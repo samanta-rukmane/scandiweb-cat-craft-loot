@@ -87,7 +87,7 @@
           <span class="nav-icon" data-icon="skills"></span>Skill Tree
         </button>
 
-        <button type="button" id="boxBtn" class="nav-item">
+        <button type="button" id="boxBtn" class="nav-item" data-nav="box">
           <span class="nav-icon" data-icon="box"></span>Open Box
         </button>
 
@@ -333,10 +333,71 @@
           Explore Secret Skins →
         </button>
       </div>
+        </section>
+
+        <section class="game" data-view="box" hidden>
+      <div class="page-heading">
+        <div>
+          <h1>Good things come in little boxes.</h1>
+          <p>Spend energy on a mystery box and see which skin is waiting inside.</p>
+        </div>
+      </div>
+
+      <div class="box-row">
+        <div class="box-card box-main">
+          <img class="hidden-secret-cat" data-cat-id="secret_7" alt="Secret Cat" />
+          <span class="box-tag">Your next little surprise</span>
+
+          <div class="box-stage">
+            <img class="box-chest" id="boxChest" src="./skins/chest.svg" alt="" />
+            <div class="lootbox-container" id="boxReel" hidden>
+              <div class="lootbox-line"></div>
+              <div class="lootbox-ribbon"></div>
+            </div>
+          </div>
+
+          <h2 class="box-title">The cozy mystery box</h2>
+          <p class="box-text">One box. One skin. A whole lot of possibility.</p>
+
+          <button type="button" id="openBoxBtn" class="btn-primary box-open">
+            <img src="./icons/box.svg" alt="" class="btn-icon" />
+            <span>Open box · <span id="boxCost">5</span> energy</span>
+          </button>
+
+          <p class="ui-note">Uses energy from your balance above.</p>
+          <button type="button" id="watchAddBtn" class="link-btn">
+            Watch AD · +5 energy
+          </button>
+        </div>
+
+        <div class="box-card box-reward">
+          <span class="box-tag box-tag-muted">Latest reward</span>
+          <span class="box-tag box-tag-new" id="latestBadge" hidden></span>
+
+          <p class="box-text" id="latestEmpty">Nothing yet. Open a box to meet your next cat.</p>
+
+          <div class="box-reward-content" id="latestContent" hidden>
+            <div class="box-reward-art">
+              <div class="skin-preview" id="latestPreview"></div>
+            </div>
+            <span class="rarity-tag" id="latestRarity"></span>
+            <h2 class="box-title" id="latestName"></h2>
+            <div class="box-actions">
+              <button type="button" id="latestEquipBtn" class="btn-primary"></button>
+              <button type="button" id="latestCollectionBtn" class="btn-secondary">
+                View collection
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards-heading">
+        <h2>A peek at what could be inside</h2>
+      </div>
+      <div class="peek-row" id="boxPeek"></div>
     </section>
     </div>
-
-
 
     <dialog id="craftConfirmDialog" class="modal craft-confirm-dialog">
       <h2 id="craftConfirmTitle">Craft this skin?</h2>
@@ -360,66 +421,6 @@
       <p>Watching ad...</p>
     </dialog>
 
-    <dialog id="dialog" class="modal lootbox-modal">
-      <div class="lootbox-modal-content">
-        <img
-          class="hidden-secret-cat"
-          data-cat-id="secret_7"
-          alt="Secret Cat"
-        />
-        <div class="lootbox-modal-header">
-          <div class="lootbox-header-info">
-            <h2>Open a Loot Box</h2>
-
-            <div class="energy-ad-row">
-              <div class="energy-display">
-                <div
-                  class="energy-bar"
-                  role="progressbar"
-                  aria-label="Energy"
-                  aria-valuemin="0"
-                  aria-valuemax="10"
-                  aria-valuenow="10"
-                ></div>
-              </div>
-
-              <span class="energy-count">10 / 10</span>
-
-              <button type="button" class="btn watch-ad-btn" id="watchAddBtn">
-                Watch AD
-              </button>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            id="closeBtn"
-            class="btn close-btn"
-            aria-label="Close loot box"
-          >
-            &times;
-          </button>
-        </div>
-
-        <div class="lootbox-container">
-          <div class="lootbox-line"></div>
-          <div class="lootbox-ribbon"></div>
-        </div>
-
-        <button type="button" id="openBoxBtn" class="btn open-lootbox-btn">
-          OPEN BOX
-        </button>
-
-        <p class="dust-display">
-          Dust:
-          <span class="dust-count">0</span>
-
-          <img src="./skins/dust.png" alt="Dust" class="dust-icon" />
-        </p>
-
-        <p id="lootResult"></p>
-      </div>
-    </dialog>
 
     <dialog id="shopDialog" class="modal shop-dialog">
       <div class="shop-content">

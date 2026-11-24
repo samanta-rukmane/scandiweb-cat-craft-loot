@@ -29,14 +29,20 @@ export function rollSkin() {
   return ids[Math.floor(Math.random() * ids.length)];
 }
 
+export function getLootboxCost() {
+  return Math.max(0, LOOTBOX.energyCost + getSkillBonus("chestEnergyCost"));
+}
+
 export function openBox() {
   if (state.pendingReward) {
     return { ok: false };
   }
   updateEnergy();
-  if (state.energy < LOOTBOX.energyCost) return { ok: false };
 
-  state.energy -= LOOTBOX.energyCost + getSkillBonus("chestEnergyCost");
+  const cost = getLootboxCost();
+  if (state.energy < cost) return { ok: false };
+
+  state.energy -= cost;
   const id = rollSkin();
   state.pendingReward = id;
   return { ok: true, id };

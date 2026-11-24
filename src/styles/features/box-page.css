@@ -1,0 +1,307 @@
+/* Open Box page */
+
+[data-view="box"] .box-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+/* Cards */
+[data-view="box"] .box-card {
+  position: relative;
+  display: flex;
+  min-height: 504px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px 24px;
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+[data-view="box"] .box-main {
+  background: var(--scene);
+}
+
+[data-view="box"] .box-reward {
+  border-color: rgb(132 112 158 / 40%);
+  background: var(--lavender);
+}
+
+/* Tags in the card corners */
+[data-view="box"] .box-tag {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  padding: 5px 10px;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  background: var(--biscuit);
+  color: var(--cocoa);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+[data-view="box"] .box-tag-muted {
+  left: 18px;
+  transform: none;
+  background: rgb(132 112 158 / 14%);
+  color: var(--plum);
+}
+
+[data-view="box"] .box-tag-new {
+  right: 18px;
+  left: auto;
+  transform: none;
+  background: var(--petal-soft);
+  color: var(--raspberry);
+}
+
+/* Left card: chest or reel */
+[data-view="box"] .box-stage {
+  display: grid;
+  width: 100%;
+  height: 236px;
+  margin-bottom: 8px;
+  place-items: center;
+}
+
+[data-view="box"] .box-chest {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+[data-view="box"] .lootbox-container {
+  width: 100%;
+  margin: 0;
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+[data-view="box"] .lootbox-line {
+  background: var(--raspberry);
+}
+
+[data-view="box"] .reel-card {
+  background: var(--surface);
+}
+
+[data-view="box"] .box-title {
+  margin: 8px 0;
+  color: var(--cocoa);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  line-height: 1.2;
+}
+
+[data-view="box"] .box-text {
+  margin: 0 0 16px;
+  color: var(--cocoa-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+[data-view="box"] .box-open {
+  height: 44px;
+  padding: 0 22px;
+  font-size: 13px;
+}
+
+[data-view="box"] .btn-icon {
+  width: 20px;
+  height: 20px;
+  image-rendering: pixelated;
+}
+
+[data-view="box"] .box-main .ui-note {
+  margin-top: 12px;
+  font-size: 10px;
+}
+
+[data-view="box"] #watchAddBtn {
+  margin-top: 6px;
+  font-size: 11px;
+}
+
+[data-view="box"] #watchAddBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+/* Right card: latest reward */
+[data-view="box"] .box-reward-content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+[data-view="box"] .box-reward-art {
+  display: grid;
+  height: 210px;
+  place-items: center;
+}
+
+[data-view="box"] .skin-preview {
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  image-rendering: pixelated;
+}
+
+[data-view="box"] .box-reward-art .skin-preview {
+  width: 192px;
+  height: 192px;
+}
+
+[data-view="box"] .box-reward .box-title {
+  margin: 0;
+  font-size: 26px;
+}
+
+[data-view="box"] .box-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+[data-view="box"] .box-actions .btn-primary,
+[data-view="box"] .box-actions .btn-secondary {
+  width: auto;
+  height: 44px;
+  padding: 0 20px;
+  font-size: 13px;
+}
+
+/* Rarity tags (same colors as the skins page) */
+[data-view="box"] .rarity-tag {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--track);
+  color: var(--cocoa-muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+[data-view="box"] .rarity-tag[data-rarity="rare"] {
+  background: var(--petal-soft);
+  color: var(--raspberry);
+}
+
+[data-view="box"] .rarity-tag[data-rarity="epic"] {
+  background: var(--lavender);
+  color: var(--plum);
+}
+
+[data-view="box"] .rarity-tag[data-rarity="legendary"] {
+  background: var(--biscuit);
+  color: var(--cocoa);
+}
+
+[data-view="box"] .box-reward .rarity-tag[data-rarity="epic"] {
+  background: rgb(132 112 158 / 14%);
+}
+
+/* A peek at what could be inside */
+[data-view="box"] .peek-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+[data-view="box"] .peek-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+[data-view="box"] .peek-art {
+  display: grid;
+  flex: 0 0 78px;
+  width: 78px;
+  height: 78px;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: #dbe8ec;
+}
+
+[data-view="box"] .peek-art[data-rarity="rare"] {
+  background: var(--petal);
+}
+
+[data-view="box"] .peek-art[data-rarity="epic"] {
+  background: var(--lavender);
+}
+
+[data-view="box"] .peek-art .skin-preview {
+  width: 64px;
+  height: 64px;
+}
+
+[data-view="box"] .peek-info {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+[data-view="box"] .peek-info .skin-name {
+  margin: 0;
+  color: var(--cocoa);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  [data-view="box"] .box-row {
+    grid-template-columns: 1fr;
+  }
+
+  [data-view="box"] .box-card {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 750px) {
+  [data-view="box"] .peek-row {
+    grid-template-columns: 1fr;
+  }
+
+  [data-view="box"] .box-stage {
+    height: 200px;
+  }
+
+  [data-view="box"] .box-title {
+    font-size: 20px;
+  }
+}
+
+/* keep last: respects the hidden attribute over the display rules above */
+[data-view="box"] [hidden] {
+  display: none;
+}
