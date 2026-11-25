@@ -1,3 +1,4 @@
+/* Loot box reel (shown inside the Open Box page) */
 .lootbox-container {
   position: relative;
   width: 600px;
@@ -69,91 +70,7 @@
   transform: none;
 }
 
-.lootbox-modal {
-  width: min(600px, calc(100% - 30px));
-  max-width: 600px;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-  padding: 25px;
-}
-
-.lootbox-modal::backdrop {
-  background: rgb(0 0 0 / 60%);
-}
-
-.lootbox-modal-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.lootbox-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.lootbox-header-info {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 12px;
-  min-width: 0;
-}
-
-.lootbox-header-info h2 {
-  margin: 0;
-  text-align: left;
-}
-
-.energy-ad-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 12px;
-  flex-wrap: nowrap;
-}
-
-.energy-display {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  margin: 0;
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--brown);
-}
-
-.energy-bar {
-  display: block;
-  width: 183px;
-  height: 45px;
-  flex: 0 0 183px;
-  background-image: url("/skins/energy-bar.png");
-  background-repeat: no-repeat;
-  background-size: 576px 96px;
-  image-rendering: pixelated;
-}
-
-.energy-count {
-  display: inline-block;
-  flex: 0 0 auto;
-  min-width: 0;
-  white-space: nowrap;
-  margin-left: -5px;
-}
-
+/* Ad dialog */
 #adDialog {
   width: min(600px, calc(100% - 30px));
   max-width: 600px;
@@ -169,60 +86,12 @@
   border-radius: 8px;
 }
 
-.watch-ad-btn {
-  flex-shrink: 0;
-  margin: 0 0 0 auto;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 8px;
-  background: var(--accent);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.watch-ad-btn:hover {
-  background: var(--accent-dark);
-}
-
-.open-lootbox-btn {
-  display: block;
-  margin: 20px auto 0;
-  padding: 12px 25px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.open-lootbox-btn:hover {
-  background: var(--accent-dark);
-}
-
-.dust-display {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin: 15px 0 5px;
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--brown);
-}
-
+/* Dust icon (craft confirmation, shop) */
 .dust-icon {
   width: 24px;
   height: 24px;
   object-fit: contain;
   image-rendering: pixelated;
-}
-
-#lootResult {
-  align-self: center;
-  min-height: 24px;
-  margin: 8px 0 0;
-  font-weight: bold;
-  text-align: center;
-  color: var(--brown);
 }
 
 @media (max-width: 750px) {
@@ -231,40 +100,13 @@
     flex-basis: 85px;
     height: 100px;
   }
-  .lootbox-modal {
-    padding: 15px;
-  }
 
   .lootbox-container {
     height: 120px;
   }
-
-  .energy-ad-row {
-    flex-wrap: wrap;
-  }
-  .watch-ad-btn {
-    padding: 10px 15px;
-    font-size: 14px;
-  }
-
-  .lootbox-modal-header {
-    gap: 10px;
-  }
-  .energy-bar {
-    max-width: 100%;
-  }
 }
+
 @media (max-width: 380px) {
-  .energy-bar {
-    width: 140px;
-    flex-basis: 140px;
-  }
-
-  .watch-ad-btn {
-    padding: 10px;
-    font-size: 13px;
-  }
-
   #dailyRewardDialog,
   #adDialog {
     padding: 15px;

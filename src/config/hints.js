@@ -1,11 +1,9 @@
-// - NEW FILE -
-
 export const HINT_COSTS = [200, 300];
 
 export const SECRET_HINTS = {
   secretCat: [
     "Some tiny cats are hiding in the game itself. Look carefully around the screen.",
-    "There are 10 hidden cats: on the main screen and inside windows like the loot box, shop, achievements and instructions. Click every one of them.",
+    "There are 10 hidden cats: on the main screen, on the Open Box page and inside windows like the shop, achievements and instructions. Click every one of them.",
   ],
   alienCat: [
     "Cats love quiet nights. Something strange may happen when the scenery is just right.",
