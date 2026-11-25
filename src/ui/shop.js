@@ -4,34 +4,47 @@ import { BACKGROUNDS } from "../config/backgrounds.js";
 import { assetUrl } from "../config/paths.js";
 import { triggerUfoEvent } from "../events/ufoEvent.js";
 
-export function initShop(onChange) {
-  const shopDialog = document.getElementById("shopDialog");
-  const openShopBtn = document.getElementById("openShopBtn");
-  const closeShopBtn = document.getElementById("closeShopBtn");
-  const backgroundList = document.getElementById("backgroundList");
-  const shopDustCount = document.getElementById("shopDustCount");
-  const catContainer = document.querySelector(".cat-container");
+let onChangeCallback = null;
+let lastSignature = "";
 
-  if (
-    !shopDialog ||
-    !openShopBtn ||
-    !closeShopBtn ||
-    !backgroundList ||
-    !shopDustCount ||
-    !catContainer
-  ) {
+export function initShop(onChange) {
+  onChangeCallback = onChange;
+
+  const grid = document.getElementById("shopGrid");
+  const openShopBtn = document.getElementById("openShopBtn");
+
+  if (!grid || !openShopBtn) {
     console.error("Shop elements are missing from index.html.");
     return;
   }
 
-  if (shopDialog) {
-    shopDialog.addEventListener("click", (event) => {
-      if (event.target === shopDialog) {
-        shopDialog.close();
-      }
-    });
-  }
+  normalizeBackgrounds();
 
+  openShopBtn.addEventListener("click", () => renderShop());
+
+  applyBackground();
+  renderShop();
+}
+
+// Called from render(): rebuilds the page only when something it shows changed.
+export function refreshShop() {
+  const view = document.querySelector('[data-view="shop"]');
+
+  if (!view || view.hidden) return;
+  if (getSignature() === lastSignature) return;
+
+  renderShop();
+}
+
+function getSignature() {
+  return [
+    Math.floor(state.dust),
+    state.ownedBackgrounds.join(","),
+    state.equippedBackground,
+  ].join("|");
+}
+
+function normalizeBackgrounds() {
   if (!Array.isArray(state.ownedBackgrounds)) {
     state.ownedBackgrounds = ["cozy_room"];
   }
@@ -52,122 +65,145 @@ export function initShop(onChange) {
   ) {
     state.equippedBackground = "cozy_room";
   }
+}
 
-  function applyBackground() {
-    const background = BACKGROUNDS[state.equippedBackground];
+function applyBackground() {
+  const catContainer = document.querySelector(".cat-container");
+  const background = BACKGROUNDS[state.equippedBackground];
 
-    if (!background) {
-      console.error("Background not found:", state.equippedBackground);
+  if (!catContainer) {
+    console.error("Scene element .cat-container was not found.");
+    return;
+  }
+
+  if (!background) {
+    console.error("Background not found:", state.equippedBackground);
+    return;
+  }
+
+  catContainer.style.backgroundImage = `url("${assetUrl(background.image)}")`;
+  catContainer.style.backgroundSize = "cover";
+  catContainer.style.backgroundPosition = "center";
+  catContainer.style.backgroundRepeat = "no-repeat";
+}
+
+function renderShop() {
+  const grid = document.getElementById("shopGrid");
+  if (!grid) return;
+
+  grid.replaceChildren();
+
+  for (const [id, background] of Object.entries(BACKGROUNDS)) {
+    grid.appendChild(buildCard(id, background));
+  }
+
+  lastSignature = getSignature();
+}
+
+function buildCard(id, background) {
+  const owned = state.ownedBackgrounds.includes(id);
+  const equipped = state.equippedBackground === id;
+
+  const card = document.createElement("article");
+  card.classList.add("shop-card");
+
+  const image = document.createElement("img");
+  image.classList.add("shop-card-image");
+  image.src = assetUrl(background.image);
+  image.alt = background.name;
+  image.loading = "lazy";
+
+  image.addEventListener("error", () => {
+    console.error(`Could not load background image: ${background.image}`);
+  });
+
+  const body = document.createElement("div");
+  body.classList.add("shop-card-body");
+
+  const name = document.createElement("h3");
+  name.classList.add("shop-card-name");
+  name.textContent = background.name;
+
+  const footer = document.createElement("div");
+  footer.classList.add("shop-card-footer");
+
+  footer.append(owned ? buildOwnedBadge() : buildPrice(background.price));
+  footer.append(buildButton(id, background, { owned, equipped }));
+
+  body.append(name, footer);
+  card.append(image, body);
+  return card;
+}
+
+function buildOwnedBadge() {
+  const badge = document.createElement("span");
+  badge.classList.add("owned-badge");
+  badge.textContent = "Owned";
+  return badge;
+}
+
+function buildPrice(price) {
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("price");
+
+  if (price === 0) {
+    wrapper.textContent = "Free";
+    return wrapper;
+  }
+
+  const icon = document.createElement("img");
+  icon.src = assetUrl("/icons/dust.svg");
+  icon.alt = "dust";
+
+  const amount = document.createElement("span");
+  amount.textContent = String(price);
+
+  wrapper.append(icon, amount);
+  return wrapper;
+}
+
+function buildButton(id, background, { owned, equipped }) {
+  const button = document.createElement("button");
+  button.type = "button";
+
+  if (equipped) {
+    button.className = "btn-equipped";
+    button.textContent = "✓ Equipped";
+    button.setAttribute("aria-pressed", "true");
+    return button;
+  }
+
+  button.className = "btn-secondary";
+
+  if (owned) {
+    button.textContent = "Equip";
+  } else {
+    button.textContent = "Buy background";
+    button.disabled = state.dust < background.price;
+  }
+
+  button.addEventListener("click", () => chooseBackground(id, background));
+  return button;
+}
+
+function chooseBackground(id, background) {
+  if (!state.ownedBackgrounds.includes(id)) {
+    if (state.dust < background.price) {
       return;
     }
 
-    catContainer.style.backgroundImage = `url("${assetUrl(background.image)}")`;
-
-    catContainer.style.backgroundSize = "cover";
-    catContainer.style.backgroundPosition = "center";
-    catContainer.style.backgroundRepeat = "no-repeat";
+    state.dust -= background.price;
+    state.ownedBackgrounds.push(id);
   }
 
-  function renderShop() {
-    shopDustCount.textContent = Math.floor(state.dust);
-    backgroundList.innerHTML = "";
-
-    for (const [id, background] of Object.entries(BACKGROUNDS)) {
-      const owned = state.ownedBackgrounds.includes(id);
-      const equipped = state.equippedBackground === id;
-
-      const card = document.createElement("article");
-      card.classList.add("background-card");
-
-      const image = document.createElement("img");
-      image.src = assetUrl(background.image);
-      image.alt = background.name;
-      image.classList.add("background-preview");
-      image.loading = "lazy";
-
-      image.addEventListener("error", () => {
-        console.error(`Could not load background image: ${background.image}`);
-      });
-
-      const name = document.createElement("h3");
-      name.classList.add("background-name");
-      name.textContent = background.name;
-
-      const price = document.createElement("p");
-      price.classList.add("background-price");
-
-      if (background.price === 0) {
-        price.textContent = "Free";
-      } else {
-        price.textContent = `${background.price} dust`;
-      }
-
-      const button = document.createElement("button");
-      button.type = "button";
-      button.classList.add("background-action");
-
-      if (equipped) {
-        button.textContent = "Equipped";
-        button.disabled = true;
-      } else if (owned) {
-        button.textContent = "Equip";
-      } else {
-        button.textContent = "Buy";
-        button.disabled = state.dust < background.price;
-      }
-
-      button.addEventListener("click", () => {
-        const alreadyOwned = state.ownedBackgrounds.includes(id);
-
-        if (!alreadyOwned) {
-          if (state.dust < background.price) {
-            return;
-          }
-
-          state.dust -= background.price;
-
-          state.ownedBackgrounds.push(id);
-        }
-
-        state.equippedBackground = id;
-
-        applyBackground();
-
-        triggerUfoEvent();
-
-        save();
-
-        renderShop();
-
-        if (typeof onChange === "function") {
-          onChange();
-        }
-      });
-
-      card.appendChild(image);
-      card.appendChild(name);
-      card.appendChild(price);
-      card.appendChild(button);
-
-      backgroundList.appendChild(card);
-    }
-  }
-
-  openShopBtn.addEventListener("click", () => {
-    renderShop();
-
-    if (!shopDialog.open) {
-      shopDialog.showModal();
-    }
-  });
-
-  closeShopBtn.addEventListener("click", () => {
-    if (shopDialog.open) {
-      shopDialog.close();
-    }
-  });
+  state.equippedBackground = id;
 
   applyBackground();
-
+  triggerUfoEvent();
+  save();
   renderShop();
+
+  if (typeof onChangeCallback === "function") {
+    onChangeCallback();
+  }
 }

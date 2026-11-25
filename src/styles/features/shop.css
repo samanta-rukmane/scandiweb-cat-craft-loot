@@ -1,145 +1,110 @@
-.shop-dialog {
-  width: min(850px, calc(100% - 30px));
-  max-width: 850px;
-  max-height: 85vh;
-  padding: 0;
-  overflow: hidden;
-}
+/* Shop page */
 
-.shop-content {
-  display: flex;
-  flex-direction: column;
-  max-height: 85vh;
-  padding: 20px;
-  overflow-y: auto;
+[data-view="shop"] {
   position: relative;
 }
 
-.shop-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.shop-header h2 {
-  margin: 0;
-  font-size: 25px;
-}
-
-.shop-balance {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-  padding: 10px 12px;
-  border: 2px solid #d4b58b;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 16px;
-}
-
-.shop-balance strong {
-  font-size: 18px;
-}
-
-.shop-balance .dust-icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-}
-
-.shop-description {
-  margin: 0 0 18px;
-  line-height: 1.5;
-}
-
-.background-list {
+[data-view="shop"] .shop-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
-.background-card {
+/* Background card */
+[data-view="shop"] .shop-card {
   display: flex;
-  flex-direction: column;
   min-width: 0;
-  padding: 10px;
-  border: 2px solid #d4b58b;
-  border-radius: 10px;
-  background: #fff;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
 }
 
-.background-preview {
+[data-view="shop"] .shop-card-image {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: 6px;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
-  background: #e8d9c4;
+  background: var(--scene);
 }
 
-.background-name {
-  margin: 10px 0 5px;
-  font-size: 15px;
+[data-view="shop"] .shop-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 14px 20px;
+}
+
+[data-view="shop"] .shop-card-name {
+  margin: 0;
+  color: var(--cocoa);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
   overflow-wrap: anywhere;
 }
 
-.background-price {
-  margin: 0 0 10px;
-  font-size: 14px;
+[data-view="shop"] .shop-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.background-action {
-  width: 100%;
-  margin-top: auto;
-  padding: 9px 8px;
-  border: 2px solid var(--brown);
-  border-radius: 7px;
-  background: #f0c878;
-  color: #392819;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
+/* Owned badge */
+[data-view="shop"] .owned-badge {
+  padding: 5px 9px;
+  border-radius: 4px;
+  background: var(--sage);
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
 }
 
-.background-action:hover:not(:disabled) {
-  background: #ffda91;
+/* Buttons */
+[data-view="shop"] .shop-card-footer .btn-secondary,
+[data-view="shop"] .shop-card-footer .btn-equipped {
+  width: auto;
+  height: 36px;
+  padding: 0 14px;
+  font-size: 12px;
 }
 
-.background-action:disabled {
-  border-color: #c9bda9;
-  background: #e6dfd4;
-  color: #756b5e;
+[data-view="shop"] .shop-card-footer .btn-secondary:disabled {
+  border-color: var(--border-soft);
+  background: var(--track);
+  box-shadow: none;
+  color: var(--cocoa-muted);
   cursor: not-allowed;
 }
 
-@media (max-width: 750px) {
-  .background-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-  .shop-content {
-    padding: 14px;
-  }
+[data-view="shop"] .btn-equipped {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgb(101 124 80 / 35%);
+  border-radius: var(--radius-sm);
+  background: var(--sage);
+  box-shadow: 0 3px 0 rgb(101 124 80 / 25%);
+  color: var(--green);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  cursor: default;
+}
 
-  .shop-header h2 {
-    font-size: 21px;
+/* Responsive */
+@media (max-width: 1100px) {
+  [data-view="shop"] .shop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 380px) {
-  .background-list {
+@media (max-width: 700px) {
+  [data-view="shop"] .shop-grid {
     grid-template-columns: 1fr;
-  }
-
-  .shop-content {
-    padding: 12px;
-  }
-
-  .shop-header h2 {
-    font-size: 19px;
   }
 }

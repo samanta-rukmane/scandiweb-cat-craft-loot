@@ -91,7 +91,7 @@
           <span class="nav-icon" data-icon="box"></span>Open Box
         </button>
 
-        <button type="button" id="openShopBtn" class="nav-item">
+        <button type="button" id="openShopBtn" class="nav-item" data-nav="shop">
           <span class="nav-icon" data-icon="shop"></span>Shop
         </button>
 
@@ -397,6 +397,25 @@
       </div>
       <div class="peek-row" id="boxPeek"></div>
     </section>
+
+    <section class="game" data-view="shop" hidden>
+      <div class="page-heading">
+        <div>
+          <h1>A few things for your favorite cat.</h1>
+          <p>Put your dust to good use. A stronger click, a cozier room, a new surprise.</p>
+        </div>
+        <div class="badge badge-lavender">
+          <span>DUST WELL SPENT</span>
+        </div>
+      </div>
+
+      <div class="cards-heading">
+        <h2>A change of scenery</h2>
+      </div>
+      <div class="shop-grid" id="shopGrid"></div>
+
+      <img class="hidden-secret-cat" data-cat-id="secret_8" alt="Secret Cat" />
+    </section>
     </div>
 
     <dialog id="craftConfirmDialog" class="modal craft-confirm-dialog">
@@ -419,43 +438,6 @@
     <dialog id="adDialog" class="modal">
       <video id="adVideo" src="./ad.webm" muted playsinline></video>
       <p>Watching ad...</p>
-    </dialog>
-
-
-    <dialog id="shopDialog" class="modal shop-dialog">
-      <div class="shop-content">
-        <img
-          class="hidden-secret-cat"
-          data-cat-id="secret_8"
-          alt="Secret Cat"
-        />
-        <header class="shop-header">
-          <h2>Background Shop</h2>
-
-          <button
-            type="button"
-            id="closeShopBtn"
-            aria-label="Close shop"
-            class="btn close-btn"
-          >
-            &times;
-          </button>
-        </header>
-
-        <div class="shop-balance">
-          <span>Your dust:</span>
-
-          <strong id="shopDustCount">0</strong>
-
-          <img src="/skins/dust.png" alt="" class="dust-icon" />
-        </div>
-
-        <p class="shop-description">
-          Buy new backgrounds and give your cat a new place to relax!
-        </p>
-
-        <div id="backgroundList" class="background-list"></div>
-      </div>
     </dialog>
 
     <dialog id="dailyRewardDialog" class="modal">
